@@ -52,3 +52,6 @@
 [[constraint]]
   branch = "master"
   name = "golang.org/x/net"
+
+[metadata]
+root-package = github.com/wunari/easypoll
