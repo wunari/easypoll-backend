@@ -1,2 +1,5 @@
 # binaries
 *.exe
+
+# modules
+vendor
