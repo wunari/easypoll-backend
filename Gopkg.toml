@@ -30,5 +30,5 @@
   branch = "master"
   name = "golang.org/x/net"
 
-[metadata]
+[metadata.heroku]
 root-package = "github.com/wunari/easypoll-backend"
