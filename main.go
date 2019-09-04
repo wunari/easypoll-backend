@@ -4,10 +4,10 @@ import (
 	"flag"
 	"log"
 
-	"github.com/wunari/easypoll/docs/models"
-	"github.com/wunari/easypoll/docs/restapi"
-	"github.com/wunari/easypoll/docs/restapi/operations"
-	"github.com/wunari/easypoll/docs/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/docs/models"
+	"github.com/wunari/easypoll-backend/docs/restapi"
+	"github.com/wunari/easypoll-backend/docs/restapi/operations"
+	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
 
 	"github.com/go-openapi/loads"
 	"github.com/go-openapi/runtime/middleware"

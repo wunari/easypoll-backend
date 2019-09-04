@@ -13,7 +13,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	models "github.com/wunari/easypoll/docs/models"
+	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // NewCreatePollParams creates a new CreatePollParams object

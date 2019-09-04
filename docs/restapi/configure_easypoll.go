@@ -10,8 +10,8 @@ import (
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
 
-	"github.com/wunari/easypoll/docs/restapi/operations"
-	"github.com/wunari/easypoll/docs/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/docs/restapi/operations"
+	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
 )
 
 //go:generate swagger generate server --target ../../docs --name Easypoll --spec ../swagger.yml --exclude-main
