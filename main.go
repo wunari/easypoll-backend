@@ -6,13 +6,12 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/wunari/easypoll-backend/docs/models"
 	"github.com/wunari/easypoll-backend/docs/restapi"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/handlers"
 
 	"github.com/go-openapi/loads"
-	"github.com/go-openapi/runtime/middleware"
 )
 
 func main() {
@@ -39,16 +38,13 @@ func main() {
 
 	// parse flags
 	flag.Parse()
+
 	// set the port this service will be run on
 	server.Port = *portFlag
 
-	// GetGreetingHandler greets the given name,
-	// in case the name is not given, it will default to World
-	api.PollGetPollsHandler = poll.GetPollsHandlerFunc(
-		func(params poll.GetPollsParams) middleware.Responder {
-			polls := []*models.Poll{}
-			return poll.NewGetPollsOK().WithPayload(polls)
-		})
+	// handlers
+	api.PollGetPollsHandler = poll.GetPollsHandlerFunc(handlers.GetPollsHandlerFunc)
+	api.PollCreatePollHandler = poll.CreatePollHandlerFunc(handlers.CreatePollHandlerFunc)
 
 	// serve API
 	if err := server.Serve(); err != nil {

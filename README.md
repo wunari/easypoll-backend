@@ -7,6 +7,9 @@ API for the easypoll application
 **DO NOT** edit files in `docs` folder, they are regenerated everytime the schema changes
 
 ```bash
+# clone project
+go get github.com/wunari/easypoll-backend
+
 # run server
 go run main.go
 
