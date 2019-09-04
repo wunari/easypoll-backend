@@ -1,0 +1,65 @@
+swagger: "2.0"
+info:
+  description: "This is the oficial documentation for the EasyPoll API."
+  version: "1.0.0"
+  title: "EasyPoll"
+  contact:
+    email: "noreply@easypoll.com.br"
+basePath: "/v1"
+tags:
+- name: "poll"
+  description: "Operations about polls"
+schemes:
+- "https"
+- "http"
+paths:
+  /polls:
+    get:
+      tags:
+      - "poll"
+      summary: "Gets an array with all the polls"
+      description: ""
+      operationId: "getPolls"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Poll"
+          description: "Returns an array of polls"
+    post:
+      tags:
+      - "poll"
+      summary: "Creates a new poll"
+      description: ""
+      operationId: "createPoll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Poll object that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Poll"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/Poll"
+          description: "Poll created"
+        400:
+          description: "Invalid input"
+definitions:
+  Poll:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      slug:
+        type: "string"
