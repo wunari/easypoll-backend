@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
+	"strconv"
 
 	"github.com/wunari/easypoll-backend/docs/models"
 	"github.com/wunari/easypoll-backend/docs/restapi"
@@ -13,9 +15,14 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-var portFlag = flag.Int("port", 3000, "Port to run this service on")
-
 func main() {
+	// load port
+	port, _ := strconv.Atoi(os.Getenv("PORT"))
+	if port == 0 {
+		port = 3000
+	}
+	var portFlag = flag.Int("port", port, "Port to run this service on")
+
 	// load embedded swagger file
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
 	if err != nil {
