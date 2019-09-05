@@ -171,6 +171,9 @@ func init() {
           "400": {
             "description": "Invalid input"
           },
+          "404": {
+            "description": "Resource not found"
+          },
           "422": {
             "description": "Missing required fields"
           }
@@ -215,6 +218,9 @@ func init() {
         "title"
       ],
       "properties": {
+        "id": {
+          "type": "number"
+        },
         "slug": {
           "type": "string"
         },
@@ -385,6 +391,9 @@ func init() {
           "400": {
             "description": "Invalid input"
           },
+          "404": {
+            "description": "Resource not found"
+          },
           "422": {
             "description": "Missing required fields"
           }
@@ -429,6 +438,9 @@ func init() {
         "title"
       ],
       "properties": {
+        "id": {
+          "type": "number"
+        },
         "slug": {
           "type": "string"
         },

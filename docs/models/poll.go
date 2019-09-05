@@ -17,6 +17,9 @@ import (
 // swagger:model Poll
 type Poll struct {
 
+	// id
+	ID float64 `json:"id,omitempty"`
+
 	// slug
 	Slug string `json:"slug,omitempty"`
 

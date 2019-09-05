@@ -45,6 +45,9 @@ func main() {
 	// handlers
 	api.PollGetPollsHandler = poll.GetPollsHandlerFunc(handlers.GetPollsHandlerFunc)
 	api.PollCreatePollHandler = poll.CreatePollHandlerFunc(handlers.CreatePollHandlerFunc)
+	api.PollGetPollByIDHandler = poll.GetPollByIDHandlerFunc(handlers.GetPollByIDHandlerFunc)
+	api.PollUpdatePollByIDHandler = poll.UpdatePollByIDHandlerFunc(handlers.UpdatePollByIDHandlerFunc)
+	api.PollDeletePollByIDHandler = poll.DeletePollByIDHandlerFunc(handlers.DeletePollByIDHandlerFunc)
 
 	// serve API
 	if err := server.Serve(); err != nil {

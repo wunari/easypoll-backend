@@ -81,6 +81,30 @@ func (o *UpdatePollByIDBadRequest) WriteResponse(rw http.ResponseWriter, produce
 	rw.WriteHeader(400)
 }
 
+// UpdatePollByIDNotFoundCode is the HTTP code returned for type UpdatePollByIDNotFound
+const UpdatePollByIDNotFoundCode int = 404
+
+/*UpdatePollByIDNotFound Resource not found
+
+swagger:response updatePollByIdNotFound
+*/
+type UpdatePollByIDNotFound struct {
+}
+
+// NewUpdatePollByIDNotFound creates UpdatePollByIDNotFound with default headers values
+func NewUpdatePollByIDNotFound() *UpdatePollByIDNotFound {
+
+	return &UpdatePollByIDNotFound{}
+}
+
+// WriteResponse to the client
+func (o *UpdatePollByIDNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(404)
+}
+
 // UpdatePollByIDUnprocessableEntityCode is the HTTP code returned for type UpdatePollByIDUnprocessableEntity
 const UpdatePollByIDUnprocessableEntityCode int = 422
 

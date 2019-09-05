@@ -110,6 +110,8 @@ paths:
           description: "Poll updated"
         400:
           description: "Invalid input"
+        404:
+          description: "Resource not found"
         422:
           description: "Missing required fields"
     delete:
@@ -137,6 +139,8 @@ definitions:
   Poll:
     type: "object"
     properties:
+      id:
+        type: "number"
       title:
         type: "string"
       slug:
