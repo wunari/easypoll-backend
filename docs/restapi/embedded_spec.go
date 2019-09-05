@@ -24,7 +24,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "This is the oficial documentation for the EasyPoll API.",
+    "description": "This is the oficial documentation for the EasyPoll API. If you have any problems or requests, please contact us on GitHub.",
     "title": "EasyPoll",
     "contact": {
       "email": "noreply@easypoll.com.br"
@@ -44,7 +44,7 @@ func init() {
         "tags": [
           "poll"
         ],
-        "summary": "Gets an array with all the polls",
+        "summary": "List all polls",
         "operationId": "getPolls",
         "responses": {
           "200": {
@@ -72,7 +72,7 @@ func init() {
         "operationId": "createPoll",
         "parameters": [
           {
-            "description": "Poll object that needs to be added to the database",
+            "description": "Poll that will be created",
             "name": "body",
             "in": "body",
             "required": true,
@@ -96,6 +96,116 @@ func init() {
           }
         }
       }
+    },
+    "/polls/{id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Display a single poll by id",
+        "operationId": "getPollById",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a single poll",
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Update a poll by id",
+        "operationId": "updatePollById",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "New poll data",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Poll updated",
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Missing required fields"
+          }
+        }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Delete a poll by id",
+        "operationId": "deletePollById",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Poll deleted"
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -116,7 +226,7 @@ func init() {
   },
   "tags": [
     {
-      "description": "Operations about polls",
+      "description": "Operations to get, create, update and delete polls",
       "name": "poll"
     }
   ]
@@ -128,7 +238,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "This is the oficial documentation for the EasyPoll API.",
+    "description": "This is the oficial documentation for the EasyPoll API. If you have any problems or requests, please contact us on GitHub.",
     "title": "EasyPoll",
     "contact": {
       "email": "noreply@easypoll.com.br"
@@ -148,7 +258,7 @@ func init() {
         "tags": [
           "poll"
         ],
-        "summary": "Gets an array with all the polls",
+        "summary": "List all polls",
         "operationId": "getPolls",
         "responses": {
           "200": {
@@ -176,7 +286,7 @@ func init() {
         "operationId": "createPoll",
         "parameters": [
           {
-            "description": "Poll object that needs to be added to the database",
+            "description": "Poll that will be created",
             "name": "body",
             "in": "body",
             "required": true,
@@ -200,6 +310,116 @@ func init() {
           }
         }
       }
+    },
+    "/polls/{id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Display a single poll by id",
+        "operationId": "getPollById",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return a single poll",
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      },
+      "put": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Update a poll by id",
+        "operationId": "updatePollById",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "New poll data",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Poll updated",
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "422": {
+            "description": "Missing required fields"
+          }
+        }
+      },
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Delete a poll by id",
+        "operationId": "deletePollById",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Poll deleted"
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -220,7 +440,7 @@ func init() {
   },
   "tags": [
     {
-      "description": "Operations about polls",
+      "description": "Operations to get, create, update and delete polls",
       "name": "poll"
     }
   ]

@@ -2,7 +2,7 @@
 
 /*
 Package restapi EasyPoll
-This is the oficial documentation for the EasyPoll API.
+This is the oficial documentation for the EasyPoll API. If you have any problems or requests, please contact us on GitHub.
 
 
     Schemes:

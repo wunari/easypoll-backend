@@ -31,7 +31,7 @@ func NewGetPolls(ctx *middleware.Context, handler GetPollsHandler) *GetPolls {
 
 /*GetPolls swagger:route GET /polls poll getPolls
 
-Gets an array with all the polls
+List all polls
 
 */
 type GetPolls struct {

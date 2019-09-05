@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "This is the oficial documentation for the EasyPoll API."
+  description: "This is the oficial documentation for the EasyPoll API. If you have any problems or requests, please contact us on GitHub."
   version: "1.0.0"
   title: "EasyPoll"
   contact:
@@ -8,7 +8,7 @@ info:
 basePath: "/v1"
 tags:
 - name: "poll"
-  description: "Operations about polls"
+  description: "Operations to get, create, update and delete polls"
 schemes:
 - "https"
 - "http"
@@ -17,7 +17,7 @@ paths:
     get:
       tags:
       - "poll"
-      summary: "Gets an array with all the polls"
+      summary: "List all polls"
       description: ""
       operationId: "getPolls"
       consumes:
@@ -44,7 +44,7 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Poll object that needs to be added to the database"
+        description: "Poll that will be created"
         required: true
         schema:
           $ref: "#/definitions/Poll"
@@ -57,6 +57,82 @@ paths:
           description: "Invalid input"
         422:
           description: "Missing required fields"
+  /polls/{id}:
+    get:
+      tags:
+      - "poll"
+      summary: "Display a single poll by id"
+      description: ""
+      operationId: "getPollById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          type: number
+          required: true
+          description: The id of the poll
+      responses:
+        200:
+          schema:
+              $ref: "#/definitions/Poll"
+          description: "Return a single poll"
+        404:
+          description: "Resource not found"
+    put:
+      tags:
+      - "poll"
+      summary: "Update a poll by id"
+      description: ""
+      operationId: "updatePollById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        type: number
+        required: true
+        description: The id of the poll
+      - in: "body"
+        name: "body"
+        description: "New poll data"
+        required: true
+        schema:
+          $ref: "#/definitions/Poll"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/Poll"
+          description: "Poll updated"
+        400:
+          description: "Invalid input"
+        422:
+          description: "Missing required fields"
+    delete:
+      tags:
+      - "poll"
+      summary: "Delete a poll by id"
+      description: ""
+      operationId: "deletePollById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          type: number
+          required: true
+          description: The id of the poll
+      responses:
+        204:
+          description: "Poll deleted"
+        404:
+          description: "Resource not found"
 definitions:
   Poll:
     type: "object"

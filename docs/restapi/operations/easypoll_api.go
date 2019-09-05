@@ -42,13 +42,22 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		PollCreatePollHandler: poll.CreatePollHandlerFunc(func(params poll.CreatePollParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollCreatePoll has not yet been implemented")
 		}),
+		PollDeletePollByIDHandler: poll.DeletePollByIDHandlerFunc(func(params poll.DeletePollByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation PollDeletePollByID has not yet been implemented")
+		}),
+		PollGetPollByIDHandler: poll.GetPollByIDHandlerFunc(func(params poll.GetPollByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation PollGetPollByID has not yet been implemented")
+		}),
 		PollGetPollsHandler: poll.GetPollsHandlerFunc(func(params poll.GetPollsParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollGetPolls has not yet been implemented")
+		}),
+		PollUpdatePollByIDHandler: poll.UpdatePollByIDHandlerFunc(func(params poll.UpdatePollByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation PollUpdatePollByID has not yet been implemented")
 		}),
 	}
 }
 
-/*EasypollAPI This is the oficial documentation for the EasyPoll API. */
+/*EasypollAPI This is the oficial documentation for the EasyPoll API. If you have any problems or requests, please contact us on GitHub. */
 type EasypollAPI struct {
 	spec            *loads.Document
 	context         *middleware.Context
@@ -78,8 +87,14 @@ type EasypollAPI struct {
 
 	// PollCreatePollHandler sets the operation handler for the create poll operation
 	PollCreatePollHandler poll.CreatePollHandler
+	// PollDeletePollByIDHandler sets the operation handler for the delete poll by Id operation
+	PollDeletePollByIDHandler poll.DeletePollByIDHandler
+	// PollGetPollByIDHandler sets the operation handler for the get poll by Id operation
+	PollGetPollByIDHandler poll.GetPollByIDHandler
 	// PollGetPollsHandler sets the operation handler for the get polls operation
 	PollGetPollsHandler poll.GetPollsHandler
+	// PollUpdatePollByIDHandler sets the operation handler for the update poll by Id operation
+	PollUpdatePollByIDHandler poll.UpdatePollByIDHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -147,8 +162,20 @@ func (o *EasypollAPI) Validate() error {
 		unregistered = append(unregistered, "poll.CreatePollHandler")
 	}
 
+	if o.PollDeletePollByIDHandler == nil {
+		unregistered = append(unregistered, "poll.DeletePollByIDHandler")
+	}
+
+	if o.PollGetPollByIDHandler == nil {
+		unregistered = append(unregistered, "poll.GetPollByIDHandler")
+	}
+
 	if o.PollGetPollsHandler == nil {
 		unregistered = append(unregistered, "poll.GetPollsHandler")
+	}
+
+	if o.PollUpdatePollByIDHandler == nil {
+		unregistered = append(unregistered, "poll.UpdatePollByIDHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -254,10 +281,25 @@ func (o *EasypollAPI) initHandlerCache() {
 	}
 	o.handlers["POST"]["/polls"] = poll.NewCreatePoll(o.context, o.PollCreatePollHandler)
 
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/polls/{id}"] = poll.NewDeletePollByID(o.context, o.PollDeletePollByIDHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/polls/{id}"] = poll.NewGetPollByID(o.context, o.PollGetPollByIDHandler)
+
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/polls"] = poll.NewGetPolls(o.context, o.PollGetPollsHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/polls/{id}"] = poll.NewUpdatePollByID(o.context, o.PollUpdatePollByIDHandler)
 
 }
 
