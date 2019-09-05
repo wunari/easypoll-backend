@@ -18,7 +18,7 @@ paths:
       tags:
       - "poll"
       summary: "List all polls"
-      description: ""
+      description: "Gets a list with all the polls in the database"
       operationId: "getPolls"
       consumes:
       - "application/json"
@@ -30,12 +30,12 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Poll"
-          description: "Returns an array of polls"
+          description: "Poll list fetched successfully"
     post:
       tags:
       - "poll"
       summary: "Creates a new poll"
-      description: ""
+      description: "Inserts a new poll in the database"
       operationId: "createPoll"
       consumes:
       - "application/json"
@@ -62,7 +62,7 @@ paths:
       tags:
       - "poll"
       summary: "Display a single poll by id"
-      description: ""
+      description: "Gets a single poll by id"
       operationId: "getPollById"
       consumes:
       - "application/json"
@@ -78,14 +78,14 @@ paths:
         200:
           schema:
               $ref: "#/definitions/Poll"
-          description: "Return a single poll"
+          description: "Poll fetched successfully"
         404:
           description: "Resource not found"
     put:
       tags:
       - "poll"
       summary: "Update a poll by id"
-      description: ""
+      description: "Updates the whole poll object with a new one"
       operationId: "updatePollById"
       consumes:
       - "application/json"
@@ -118,7 +118,7 @@ paths:
       tags:
       - "poll"
       summary: "Delete a poll by id"
-      description: ""
+      description: "Removes a poll from the database by id"
       operationId: "deletePollById"
       consumes:
       - "application/json"
@@ -141,9 +141,23 @@ definitions:
     properties:
       id:
         type: "number"
+      question:
+        type: "string"
+      answers:
+        type: "array"
+        items:
+          $ref: '#/definitions/Answer'
+      votes:
+        type: "number"
+        x-omitempty: false
+    required:
+      - question
+      - answers
+  Answer:
+    type: "object"
+    properties:
       title:
         type: "string"
-      slug:
-        type: "string"
-    required:
-      - title
+      votes:
+        type: "number"
+        x-omitempty: false

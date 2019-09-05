@@ -35,6 +35,7 @@ func init() {
   "paths": {
     "/polls": {
       "get": {
+        "description": "Gets a list with all the polls in the database",
         "consumes": [
           "application/json"
         ],
@@ -48,7 +49,7 @@ func init() {
         "operationId": "getPolls",
         "responses": {
           "200": {
-            "description": "Returns an array of polls",
+            "description": "Poll list fetched successfully",
             "schema": {
               "type": "array",
               "items": {
@@ -59,6 +60,7 @@ func init() {
         }
       },
       "post": {
+        "description": "Inserts a new poll in the database",
         "consumes": [
           "application/json"
         ],
@@ -99,6 +101,7 @@ func init() {
     },
     "/polls/{id}": {
       "get": {
+        "description": "Gets a single poll by id",
         "consumes": [
           "application/json"
         ],
@@ -121,7 +124,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Return a single poll",
+            "description": "Poll fetched successfully",
             "schema": {
               "$ref": "#/definitions/Poll"
             }
@@ -132,6 +135,7 @@ func init() {
         }
       },
       "put": {
+        "description": "Updates the whole poll object with a new one",
         "consumes": [
           "application/json"
         ],
@@ -180,6 +184,7 @@ func init() {
         }
       },
       "delete": {
+        "description": "Removes a poll from the database by id",
         "consumes": [
           "application/json"
         ],
@@ -212,20 +217,40 @@ func init() {
     }
   },
   "definitions": {
+    "Answer": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "number",
+          "x-omitempty": false
+        }
+      }
+    },
     "Poll": {
       "type": "object",
       "required": [
-        "title"
+        "question",
+        "answers"
       ],
       "properties": {
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Answer"
+          }
+        },
         "id": {
           "type": "number"
         },
-        "slug": {
+        "question": {
           "type": "string"
         },
-        "title": {
-          "type": "string"
+        "votes": {
+          "type": "number",
+          "x-omitempty": false
         }
       }
     }
@@ -255,6 +280,7 @@ func init() {
   "paths": {
     "/polls": {
       "get": {
+        "description": "Gets a list with all the polls in the database",
         "consumes": [
           "application/json"
         ],
@@ -268,7 +294,7 @@ func init() {
         "operationId": "getPolls",
         "responses": {
           "200": {
-            "description": "Returns an array of polls",
+            "description": "Poll list fetched successfully",
             "schema": {
               "type": "array",
               "items": {
@@ -279,6 +305,7 @@ func init() {
         }
       },
       "post": {
+        "description": "Inserts a new poll in the database",
         "consumes": [
           "application/json"
         ],
@@ -319,6 +346,7 @@ func init() {
     },
     "/polls/{id}": {
       "get": {
+        "description": "Gets a single poll by id",
         "consumes": [
           "application/json"
         ],
@@ -341,7 +369,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Return a single poll",
+            "description": "Poll fetched successfully",
             "schema": {
               "$ref": "#/definitions/Poll"
             }
@@ -352,6 +380,7 @@ func init() {
         }
       },
       "put": {
+        "description": "Updates the whole poll object with a new one",
         "consumes": [
           "application/json"
         ],
@@ -400,6 +429,7 @@ func init() {
         }
       },
       "delete": {
+        "description": "Removes a poll from the database by id",
         "consumes": [
           "application/json"
         ],
@@ -432,20 +462,40 @@ func init() {
     }
   },
   "definitions": {
+    "Answer": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "number",
+          "x-omitempty": false
+        }
+      }
+    },
     "Poll": {
       "type": "object",
       "required": [
-        "title"
+        "question",
+        "answers"
       ],
       "properties": {
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Answer"
+          }
+        },
         "id": {
           "type": "number"
         },
-        "slug": {
+        "question": {
           "type": "string"
         },
-        "title": {
-          "type": "string"
+        "votes": {
+          "type": "number",
+          "x-omitempty": false
         }
       }
     }

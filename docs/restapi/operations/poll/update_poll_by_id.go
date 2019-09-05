@@ -33,6 +33,8 @@ func NewUpdatePollByID(ctx *middleware.Context, handler UpdatePollByIDHandler) *
 
 Update a poll by id
 
+Updates the whole poll object with a new one
+
 */
 type UpdatePollByID struct {
 	Context *middleware.Context

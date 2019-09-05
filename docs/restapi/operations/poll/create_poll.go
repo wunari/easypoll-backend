@@ -33,6 +33,8 @@ func NewCreatePoll(ctx *middleware.Context, handler CreatePollHandler) *CreatePo
 
 Creates a new poll
 
+Inserts a new poll in the database
+
 */
 type CreatePoll struct {
 	Context *middleware.Context

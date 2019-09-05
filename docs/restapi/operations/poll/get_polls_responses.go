@@ -16,7 +16,7 @@ import (
 // GetPollsOKCode is the HTTP code returned for type GetPollsOK
 const GetPollsOKCode int = 200
 
-/*GetPollsOK Returns an array of polls
+/*GetPollsOK Poll list fetched successfully
 
 swagger:response getPollsOK
 */

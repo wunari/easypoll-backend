@@ -16,7 +16,7 @@ import (
 // GetPollByIDOKCode is the HTTP code returned for type GetPollByIDOK
 const GetPollByIDOKCode int = 200
 
-/*GetPollByIDOK Return a single poll
+/*GetPollByIDOK Poll fetched successfully
 
 swagger:response getPollByIdOK
 */

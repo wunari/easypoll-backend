@@ -33,6 +33,8 @@ func NewGetPollByID(ctx *middleware.Context, handler GetPollByIDHandler) *GetPol
 
 Display a single poll by id
 
+Gets a single poll by id
+
 */
 type GetPollByID struct {
 	Context *middleware.Context

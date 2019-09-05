@@ -33,6 +33,8 @@ func NewDeletePollByID(ctx *middleware.Context, handler DeletePollByIDHandler) *
 
 Delete a poll by id
 
+Removes a poll from the database by id
+
 */
 type DeletePollByID struct {
 	Context *middleware.Context

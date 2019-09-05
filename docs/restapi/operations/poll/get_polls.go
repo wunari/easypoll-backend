@@ -33,6 +33,8 @@ func NewGetPolls(ctx *middleware.Context, handler GetPollsHandler) *GetPolls {
 
 List all polls
 
+Gets a list with all the polls in the database
+
 */
 type GetPolls struct {
 	Context *middleware.Context

@@ -8,12 +8,13 @@ import (
 )
 
 // in-memory "database", it will be changed to proper database later on
-var pollTitles = []string{"Project Meeting", "Favorite Activities", "Favorite Food"}
+var pollQuestions = []string{"What's your favorite color?", "What's your favorite fruit?", "Do you like my car?"}
 var polls = []*models.Poll{
-	{ID: 1, Title: &pollTitles[0], Slug: "project-meeting"},
-	{ID: 2, Title: &pollTitles[1], Slug: "favotire-activities"},
-	{ID: 3, Title: &pollTitles[2], Slug: "favorite-food"},
+	{ID: 1, Question: &pollQuestions[0], Answers: []*models.Answer{}},
+	{ID: 2, Question: &pollQuestions[1], Answers: []*models.Answer{}},
+	{ID: 3, Question: &pollQuestions[2], Answers: []*models.Answer{}},
 }
+var pollCount = float64(len(polls))
 
 // GetPollsHandlerFunc returns an array of polls
 func GetPollsHandlerFunc(params poll.GetPollsParams) middleware.Responder {
@@ -22,7 +23,8 @@ func GetPollsHandlerFunc(params poll.GetPollsParams) middleware.Responder {
 
 // CreatePollHandlerFunc inserts a new poll in the database
 func CreatePollHandlerFunc(params poll.CreatePollParams) middleware.Responder {
-	newPoll := &models.Poll{Title: params.Body.Title, Slug: params.Body.Slug}
+	pollCount++
+	newPoll := &models.Poll{ID: pollCount, Question: params.Body.Question, Answers: params.Body.Answers}
 	polls = append(polls, newPoll)
 	return poll.NewCreatePollOK().WithPayload(newPoll)
 }
@@ -41,7 +43,7 @@ func GetPollByIDHandlerFunc(params poll.GetPollByIDParams) middleware.Responder 
 func UpdatePollByIDHandlerFunc(params poll.UpdatePollByIDParams) middleware.Responder {
 	for i, p := range polls {
 		if p.ID == params.ID {
-			polls[i] = &models.Poll{ID: params.ID, Title: params.Body.Title, Slug: params.Body.Slug}
+			polls[i] = &models.Poll{ID: params.ID, Question: params.Body.Question, Answers: params.Body.Answers}
 			return poll.NewUpdatePollByIDOK().WithPayload(polls[i])
 		}
 	}

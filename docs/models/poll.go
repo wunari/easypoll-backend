@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
@@ -17,22 +19,30 @@ import (
 // swagger:model Poll
 type Poll struct {
 
+	// answers
+	// Required: true
+	Answers []*Answer `json:"answers"`
+
 	// id
 	ID float64 `json:"id,omitempty"`
 
-	// slug
-	Slug string `json:"slug,omitempty"`
-
-	// title
+	// question
 	// Required: true
-	Title *string `json:"title"`
+	Question *string `json:"question"`
+
+	// votes
+	Votes float64 `json:"votes"`
 }
 
 // Validate validates this poll
 func (m *Poll) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateTitle(formats); err != nil {
+	if err := m.validateAnswers(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateQuestion(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -42,9 +52,34 @@ func (m *Poll) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Poll) validateTitle(formats strfmt.Registry) error {
+func (m *Poll) validateAnswers(formats strfmt.Registry) error {
 
-	if err := validate.Required("title", "body", m.Title); err != nil {
+	if err := validate.Required("answers", "body", m.Answers); err != nil {
+		return err
+	}
+
+	for i := 0; i < len(m.Answers); i++ {
+		if swag.IsZero(m.Answers[i]) { // not required
+			continue
+		}
+
+		if m.Answers[i] != nil {
+			if err := m.Answers[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("answers" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Poll) validateQuestion(formats strfmt.Registry) error {
+
+	if err := validate.Required("question", "body", m.Question); err != nil {
 		return err
 	}
 
