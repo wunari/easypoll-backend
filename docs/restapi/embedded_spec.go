@@ -90,6 +90,9 @@ func init() {
           },
           "400": {
             "description": "Invalid input"
+          },
+          "422": {
+            "description": "Missing required fields"
           }
         }
       }
@@ -98,6 +101,9 @@ func init() {
   "definitions": {
     "Poll": {
       "type": "object",
+      "required": [
+        "title"
+      ],
       "properties": {
         "slug": {
           "type": "string"
@@ -188,6 +194,9 @@ func init() {
           },
           "400": {
             "description": "Invalid input"
+          },
+          "422": {
+            "description": "Missing required fields"
           }
         }
       }
@@ -196,6 +205,9 @@ func init() {
   "definitions": {
     "Poll": {
       "type": "object",
+      "required": [
+        "title"
+      ],
       "properties": {
         "slug": {
           "type": "string"

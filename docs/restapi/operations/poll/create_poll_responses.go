@@ -80,3 +80,27 @@ func (o *CreatePollBadRequest) WriteResponse(rw http.ResponseWriter, producer ru
 
 	rw.WriteHeader(400)
 }
+
+// CreatePollUnprocessableEntityCode is the HTTP code returned for type CreatePollUnprocessableEntity
+const CreatePollUnprocessableEntityCode int = 422
+
+/*CreatePollUnprocessableEntity Missing required fields
+
+swagger:response createPollUnprocessableEntity
+*/
+type CreatePollUnprocessableEntity struct {
+}
+
+// NewCreatePollUnprocessableEntity creates CreatePollUnprocessableEntity with default headers values
+func NewCreatePollUnprocessableEntity() *CreatePollUnprocessableEntity {
+
+	return &CreatePollUnprocessableEntity{}
+}
+
+// WriteResponse to the client
+func (o *CreatePollUnprocessableEntity) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(422)
+}

@@ -55,6 +55,8 @@ paths:
           description: "Poll created"
         400:
           description: "Invalid input"
+        422:
+          description: "Missing required fields"
 definitions:
   Poll:
     type: "object"
@@ -63,3 +65,5 @@ definitions:
         type: "string"
       slug:
         type: "string"
+    required:
+      - title

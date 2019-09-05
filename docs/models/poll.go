@@ -8,7 +8,9 @@ package models
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // Poll poll
@@ -19,11 +21,30 @@ type Poll struct {
 	Slug string `json:"slug,omitempty"`
 
 	// title
-	Title string `json:"title,omitempty"`
+	// Required: true
+	Title *string `json:"title"`
 }
 
 // Validate validates this poll
 func (m *Poll) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateTitle(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Poll) validateTitle(formats strfmt.Registry) error {
+
+	if err := validate.Required("title", "body", m.Title); err != nil {
+		return err
+	}
+
 	return nil
 }
 

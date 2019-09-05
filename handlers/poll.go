@@ -8,10 +8,11 @@ import (
 )
 
 // in-memory "database", it will be changed to proper database later on
+var pollTitles = []string{"Project Meeting", "Favorite Activities", "Favorite Food"}
 var polls = []*models.Poll{
-	{Title: "Project Meeting", Slug: "project-meeting"},
-	{Title: "Favorite Activities", Slug: "favotire-activities"},
-	{Title: "Favorite Food", Slug: "favorite-food"},
+	{Title: &pollTitles[0], Slug: "project-meeting"},
+	{Title: &pollTitles[1], Slug: "favotire-activities"},
+	{Title: &pollTitles[2], Slug: "favorite-food"},
 }
 
 // GetPollsHandlerFunc returns an array of polls

@@ -21,6 +21,13 @@ go build
 
 Start the server and go to http://localhost:3000/v1/docs
 
+## Generating new documentation
+You should always update `swagger.yml` first, then regenerate docs with
+
+```bash
+swagger generate server -t docs -f ./docs/swagger.yml --exclude-main -A easypoll
+```
+
 ## Built With
 
 * [go-swagger](https://goswagger.io/) - Swagger 2.0 implementation for go
