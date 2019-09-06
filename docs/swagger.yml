@@ -150,9 +150,15 @@ definitions:
       votes:
         type: "number"
         x-omitempty: false
+      multipleAnswers:
+        type: "boolean"
+      createdAt:
+        type: "string"
+        format: "date-time"
     required:
       - question
       - answers
+      - multipleAnswers
   Answer:
     type: "object"
     properties:

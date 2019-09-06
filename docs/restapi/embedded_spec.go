@@ -233,7 +233,8 @@ func init() {
       "type": "object",
       "required": [
         "question",
-        "answers"
+        "answers",
+        "multipleAnswers"
       ],
       "properties": {
         "answers": {
@@ -242,8 +243,15 @@ func init() {
             "$ref": "#/definitions/Answer"
           }
         },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
         "id": {
           "type": "number"
+        },
+        "multipleAnswers": {
+          "type": "boolean"
         },
         "question": {
           "type": "string"
@@ -478,7 +486,8 @@ func init() {
       "type": "object",
       "required": [
         "question",
-        "answers"
+        "answers",
+        "multipleAnswers"
       ],
       "properties": {
         "answers": {
@@ -487,8 +496,15 @@ func init() {
             "$ref": "#/definitions/Answer"
           }
         },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
         "id": {
           "type": "number"
+        },
+        "multipleAnswers": {
+          "type": "boolean"
         },
         "question": {
           "type": "string"

@@ -1,18 +1,21 @@
 package handlers
 
 import (
+	"time"
+
 	"github.com/wunari/easypoll-backend/docs/models"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
 
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
 )
 
 // in-memory "database", it will be changed to proper database later on
 var pollQuestions = []string{"What's your favorite color?", "What's your favorite fruit?", "Do you like my car?"}
 var polls = []*models.Poll{
-	{ID: 1, Question: &pollQuestions[0], Answers: []*models.Answer{}},
-	{ID: 2, Question: &pollQuestions[1], Answers: []*models.Answer{}},
-	{ID: 3, Question: &pollQuestions[2], Answers: []*models.Answer{}},
+	{ID: 1, Question: &pollQuestions[0], Answers: []*models.Answer{}, MultipleAnswers: new(bool), CreatedAt: strfmt.DateTime(time.Now())},
+	{ID: 2, Question: &pollQuestions[1], Answers: []*models.Answer{}, MultipleAnswers: new(bool), CreatedAt: strfmt.DateTime(time.Now())},
+	{ID: 3, Question: &pollQuestions[2], Answers: []*models.Answer{}, MultipleAnswers: new(bool), CreatedAt: strfmt.DateTime(time.Now())},
 }
 var pollCount = float64(len(polls))
 
@@ -24,7 +27,13 @@ func GetPollsHandlerFunc(params poll.GetPollsParams) middleware.Responder {
 // CreatePollHandlerFunc inserts a new poll in the database
 func CreatePollHandlerFunc(params poll.CreatePollParams) middleware.Responder {
 	pollCount++
-	newPoll := &models.Poll{ID: pollCount, Question: params.Body.Question, Answers: params.Body.Answers}
+	newPoll := &models.Poll{
+		ID:              pollCount,
+		Question:        params.Body.Question,
+		Answers:         params.Body.Answers,
+		MultipleAnswers: params.Body.MultipleAnswers,
+		CreatedAt:       strfmt.DateTime(time.Now()),
+	}
 	polls = append(polls, newPoll)
 	return poll.NewCreatePollOK().WithPayload(newPoll)
 }
@@ -43,7 +52,13 @@ func GetPollByIDHandlerFunc(params poll.GetPollByIDParams) middleware.Responder 
 func UpdatePollByIDHandlerFunc(params poll.UpdatePollByIDParams) middleware.Responder {
 	for i, p := range polls {
 		if p.ID == params.ID {
-			polls[i] = &models.Poll{ID: params.ID, Question: params.Body.Question, Answers: params.Body.Answers}
+			polls[i] = &models.Poll{
+				ID:              p.ID,
+				Question:        params.Body.Question,
+				Answers:         params.Body.Answers,
+				MultipleAnswers: params.Body.MultipleAnswers,
+				CreatedAt:       p.CreatedAt,
+			}
 			return poll.NewUpdatePollByIDOK().WithPayload(polls[i])
 		}
 	}
