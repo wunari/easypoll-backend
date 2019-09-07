@@ -8,7 +8,12 @@ package poll
 import (
 	"net/http"
 
+	errors "github.com/go-openapi/errors"
 	middleware "github.com/go-openapi/runtime/middleware"
+	strfmt "github.com/go-openapi/strfmt"
+	swag "github.com/go-openapi/swag"
+
+	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // CreatePollHandlerFunc turns a function with the right signature into a create poll handler
@@ -57,4 +62,68 @@ func (o *CreatePoll) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
+}
+
+// CreatePollBody create poll body
+// swagger:model CreatePollBody
+type CreatePollBody struct {
+	models.PollRequest
+}
+
+// UnmarshalJSON unmarshals this object from a JSON structure
+func (o *CreatePollBody) UnmarshalJSON(raw []byte) error {
+	// CreatePollParamsBodyAO0
+	var createPollParamsBodyAO0 models.PollRequest
+	if err := swag.ReadJSON(raw, &createPollParamsBodyAO0); err != nil {
+		return err
+	}
+	o.PollRequest = createPollParamsBodyAO0
+
+	return nil
+}
+
+// MarshalJSON marshals this object to a JSON structure
+func (o CreatePollBody) MarshalJSON() ([]byte, error) {
+	_parts := make([][]byte, 0, 1)
+
+	createPollParamsBodyAO0, err := swag.WriteJSON(o.PollRequest)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, createPollParamsBodyAO0)
+
+	return swag.ConcatJSON(_parts...), nil
+}
+
+// Validate validates this create poll body
+func (o *CreatePollBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	// validation for a type composition with models.PollRequest
+	if err := o.PollRequest.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreatePollBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreatePollBody) UnmarshalBinary(b []byte) error {
+	var res CreatePollBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
 }

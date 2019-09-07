@@ -11,11 +11,10 @@ import (
 )
 
 // in-memory "database", it will be changed to proper database later on
-var pollQuestions = []string{"What's your favorite color?", "What's your favorite fruit?", "Do you like my car?"}
 var polls = []*models.Poll{
-	{ID: 1, Question: &pollQuestions[0], Answers: []*models.Answer{}, MultipleAnswers: new(bool), CreatedAt: strfmt.DateTime(time.Now())},
-	{ID: 2, Question: &pollQuestions[1], Answers: []*models.Answer{}, MultipleAnswers: new(bool), CreatedAt: strfmt.DateTime(time.Now())},
-	{ID: 3, Question: &pollQuestions[2], Answers: []*models.Answer{}, MultipleAnswers: new(bool), CreatedAt: strfmt.DateTime(time.Now())},
+	{ID: 1, Question: "What's your favorite color?", Answers: []*models.Answer{&models.Answer{Title: "Red"}, &models.Answer{Title: "Blue"}}, MultipleAnswers: false, CreatedAt: strfmt.DateTime(time.Now())},
+	{ID: 2, Question: "What's your favorite fruit?", Answers: []*models.Answer{&models.Answer{Title: "Apple"}, &models.Answer{Title: "Orange"}}, MultipleAnswers: true, CreatedAt: strfmt.DateTime(time.Now())},
+	{ID: 3, Question: "Do you like my car?", Answers: []*models.Answer{&models.Answer{Title: "Yes"}, &models.Answer{Title: "No"}}, MultipleAnswers: false, CreatedAt: strfmt.DateTime(time.Now())},
 }
 var pollCount = float64(len(polls))
 

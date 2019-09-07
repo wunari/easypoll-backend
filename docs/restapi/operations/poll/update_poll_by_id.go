@@ -8,7 +8,12 @@ package poll
 import (
 	"net/http"
 
+	errors "github.com/go-openapi/errors"
 	middleware "github.com/go-openapi/runtime/middleware"
+	strfmt "github.com/go-openapi/strfmt"
+	swag "github.com/go-openapi/swag"
+
+	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // UpdatePollByIDHandlerFunc turns a function with the right signature into a update poll by Id handler
@@ -57,4 +62,68 @@ func (o *UpdatePollByID) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
+}
+
+// UpdatePollByIDBody update poll by ID body
+// swagger:model UpdatePollByIDBody
+type UpdatePollByIDBody struct {
+	models.PollRequest
+}
+
+// UnmarshalJSON unmarshals this object from a JSON structure
+func (o *UpdatePollByIDBody) UnmarshalJSON(raw []byte) error {
+	// UpdatePollByIDParamsBodyAO0
+	var updatePollByIDParamsBodyAO0 models.PollRequest
+	if err := swag.ReadJSON(raw, &updatePollByIDParamsBodyAO0); err != nil {
+		return err
+	}
+	o.PollRequest = updatePollByIDParamsBodyAO0
+
+	return nil
+}
+
+// MarshalJSON marshals this object to a JSON structure
+func (o UpdatePollByIDBody) MarshalJSON() ([]byte, error) {
+	_parts := make([][]byte, 0, 1)
+
+	updatePollByIDParamsBodyAO0, err := swag.WriteJSON(o.PollRequest)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, updatePollByIDParamsBodyAO0)
+
+	return swag.ConcatJSON(_parts...), nil
+}
+
+// Validate validates this update poll by ID body
+func (o *UpdatePollByIDBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	// validation for a type composition with models.PollRequest
+	if err := o.PollRequest.Validate(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *UpdatePollByIDBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *UpdatePollByIDBody) UnmarshalBinary(b []byte) error {
+	var res UpdatePollByIDBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
 }

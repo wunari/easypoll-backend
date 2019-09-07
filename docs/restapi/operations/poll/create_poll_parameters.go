@@ -12,8 +12,6 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
-	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // NewCreatePollParams creates a new CreatePollParams object
@@ -36,7 +34,7 @@ type CreatePollParams struct {
 	  Required: true
 	  In: body
 	*/
-	Body *models.Poll
+	Body CreatePollBody
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -50,7 +48,7 @@ func (o *CreatePollParams) BindRequest(r *http.Request, route *middleware.Matche
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.Poll
+		var body CreatePollBody
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("body", "body"))
@@ -64,7 +62,7 @@ func (o *CreatePollParams) BindRequest(r *http.Request, route *middleware.Matche
 			}
 
 			if len(res) == 0 {
-				o.Body = &body
+				o.Body = body
 			}
 		}
 	} else {

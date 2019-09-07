@@ -47,7 +47,12 @@ paths:
         description: "Poll that will be created"
         required: true
         schema:
-          $ref: "#/definitions/Poll"
+          allOf:
+            - $ref: "#/definitions/PollRequest"
+          required:
+            - question
+            - answers
+            - multipleAnswers
       responses:
         200:
           schema:
@@ -102,7 +107,12 @@ paths:
         description: "New poll data"
         required: true
         schema:
-          $ref: "#/definitions/Poll"
+          allOf:
+            - $ref: "#/definitions/PollRequest"
+          required:
+            - question
+            - answers
+            - multipleAnswers
       responses:
         200:
           schema:
@@ -143,6 +153,7 @@ definitions:
         type: "number"
       question:
         type: "string"
+        example: "What's your favorite color?"
       answers:
         type: "array"
         items:
@@ -155,15 +166,24 @@ definitions:
       createdAt:
         type: "string"
         format: "date-time"
-    required:
-      - question
-      - answers
-      - multipleAnswers
+  PollRequest:
+    type: "object"
+    properties:
+      question:
+        type: "string"
+        example: "What's your favorite color?"
+      answers:
+        type: "array"
+        items:
+          $ref: '#/definitions/Answer'
+      multipleAnswers:
+        type: "boolean"
   Answer:
     type: "object"
     properties:
       title:
         type: "string"
+        example: "Blue"
       votes:
         type: "number"
         x-omitempty: false

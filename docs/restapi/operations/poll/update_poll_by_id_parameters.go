@@ -15,8 +15,6 @@ import (
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // NewUpdatePollByIDParams creates a new UpdatePollByIDParams object
@@ -39,7 +37,7 @@ type UpdatePollByIDParams struct {
 	  Required: true
 	  In: body
 	*/
-	Body *models.Poll
+	Body UpdatePollByIDBody
 	/*The id of the poll
 	  Required: true
 	  In: path
@@ -58,7 +56,7 @@ func (o *UpdatePollByIDParams) BindRequest(r *http.Request, route *middleware.Ma
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.Poll
+		var body UpdatePollByIDBody
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			if err == io.EOF {
 				res = append(res, errors.Required("body", "body"))
@@ -72,7 +70,7 @@ func (o *UpdatePollByIDParams) BindRequest(r *http.Request, route *middleware.Ma
 			}
 
 			if len(res) == 0 {
-				o.Body = &body
+				o.Body = body
 			}
 		}
 	} else {

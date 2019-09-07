@@ -79,7 +79,16 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Poll"
+              "required": [
+                "question",
+                "answers",
+                "multipleAnswers"
+              ],
+              "allOf": [
+                {
+                  "$ref": "#/definitions/PollRequest"
+                }
+              ]
             }
           }
         ],
@@ -161,7 +170,16 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Poll"
+              "required": [
+                "question",
+                "answers",
+                "multipleAnswers"
+              ],
+              "allOf": [
+                {
+                  "$ref": "#/definitions/PollRequest"
+                }
+              ]
             }
           }
         ],
@@ -221,7 +239,8 @@ func init() {
       "type": "object",
       "properties": {
         "title": {
-          "type": "string"
+          "type": "string",
+          "example": "Blue"
         },
         "votes": {
           "type": "number",
@@ -231,11 +250,6 @@ func init() {
     },
     "Poll": {
       "type": "object",
-      "required": [
-        "question",
-        "answers",
-        "multipleAnswers"
-      ],
       "properties": {
         "answers": {
           "type": "array",
@@ -254,11 +268,30 @@ func init() {
           "type": "boolean"
         },
         "question": {
-          "type": "string"
+          "type": "string",
+          "example": "What's your favorite color?"
         },
         "votes": {
           "type": "number",
           "x-omitempty": false
+        }
+      }
+    },
+    "PollRequest": {
+      "type": "object",
+      "properties": {
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Answer"
+          }
+        },
+        "multipleAnswers": {
+          "type": "boolean"
+        },
+        "question": {
+          "type": "string",
+          "example": "What's your favorite color?"
         }
       }
     }
@@ -332,7 +365,16 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Poll"
+              "required": [
+                "question",
+                "answers",
+                "multipleAnswers"
+              ],
+              "allOf": [
+                {
+                  "$ref": "#/definitions/PollRequest"
+                }
+              ]
             }
           }
         ],
@@ -414,7 +456,16 @@ func init() {
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Poll"
+              "required": [
+                "question",
+                "answers",
+                "multipleAnswers"
+              ],
+              "allOf": [
+                {
+                  "$ref": "#/definitions/PollRequest"
+                }
+              ]
             }
           }
         ],
@@ -474,7 +525,8 @@ func init() {
       "type": "object",
       "properties": {
         "title": {
-          "type": "string"
+          "type": "string",
+          "example": "Blue"
         },
         "votes": {
           "type": "number",
@@ -484,11 +536,6 @@ func init() {
     },
     "Poll": {
       "type": "object",
-      "required": [
-        "question",
-        "answers",
-        "multipleAnswers"
-      ],
       "properties": {
         "answers": {
           "type": "array",
@@ -507,11 +554,30 @@ func init() {
           "type": "boolean"
         },
         "question": {
-          "type": "string"
+          "type": "string",
+          "example": "What's your favorite color?"
         },
         "votes": {
           "type": "number",
           "x-omitempty": false
+        }
+      }
+    },
+    "PollRequest": {
+      "type": "object",
+      "properties": {
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Answer"
+          }
+        },
+        "multipleAnswers": {
+          "type": "boolean"
+        },
+        "question": {
+          "type": "string",
+          "example": "What's your favorite color?"
         }
       }
     }
