@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
+
 	"github.com/wunari/easypoll-backend/docs/restapi"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
@@ -48,6 +50,8 @@ func main() {
 	api.PollGetPollByIDHandler = poll.GetPollByIDHandlerFunc(handlers.GetPollByIDHandlerFunc)
 	api.PollUpdatePollByIDHandler = poll.UpdatePollByIDHandlerFunc(handlers.UpdatePollByIDHandlerFunc)
 	api.PollDeletePollByIDHandler = poll.DeletePollByIDHandlerFunc(handlers.DeletePollByIDHandlerFunc)
+
+	api.VoteAddVotePollHandler = vote.AddVotePollHandlerFunc(handlers.AddVotePollHandlerFunc)
 
 	// serve API
 	if err := server.Serve(); err != nil {

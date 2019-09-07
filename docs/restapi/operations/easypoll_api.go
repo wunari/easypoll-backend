@@ -20,6 +20,7 @@ import (
 	"github.com/go-openapi/swag"
 
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
 )
 
 // NewEasypollAPI creates a new Easypoll instance
@@ -39,6 +40,9 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		BearerAuthenticator: security.BearerAuth,
 		JSONConsumer:        runtime.JSONConsumer(),
 		JSONProducer:        runtime.JSONProducer(),
+		VoteAddVotePollHandler: vote.AddVotePollHandlerFunc(func(params vote.AddVotePollParams) middleware.Responder {
+			return middleware.NotImplemented("operation VoteAddVotePoll has not yet been implemented")
+		}),
 		PollCreatePollHandler: poll.CreatePollHandlerFunc(func(params poll.CreatePollParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollCreatePoll has not yet been implemented")
 		}),
@@ -85,6 +89,8 @@ type EasypollAPI struct {
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
 
+	// VoteAddVotePollHandler sets the operation handler for the add vote poll operation
+	VoteAddVotePollHandler vote.AddVotePollHandler
 	// PollCreatePollHandler sets the operation handler for the create poll operation
 	PollCreatePollHandler poll.CreatePollHandler
 	// PollDeletePollByIDHandler sets the operation handler for the delete poll by Id operation
@@ -156,6 +162,10 @@ func (o *EasypollAPI) Validate() error {
 
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
+	}
+
+	if o.VoteAddVotePollHandler == nil {
+		unregistered = append(unregistered, "vote.AddVotePollHandler")
 	}
 
 	if o.PollCreatePollHandler == nil {
@@ -275,6 +285,11 @@ func (o *EasypollAPI) initHandlerCache() {
 	if o.handlers == nil {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/polls/{id}/votes/{answerId}"] = vote.NewAddVotePoll(o.context, o.VoteAddVotePollHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

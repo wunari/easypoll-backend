@@ -9,6 +9,8 @@ basePath: "/v1"
 tags:
 - name: "poll"
   description: "Operations to get, create, update and delete polls"
+- name: "vote"
+  description: "Operations to vote"
 schemes:
 - "https"
 - "http"
@@ -143,6 +145,33 @@ paths:
       responses:
         204:
           description: "Poll deleted"
+        404:
+          description: "Resource not found"
+  /polls/{id}/votes/{answerId}:
+    post:
+      tags:
+      - "vote"
+      summary: "Votes in a option of a a poll"
+      description: "Adds one vote to an answer of a poll"
+      operationId: "addVotePoll"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        type: number
+        required: true
+        description: The id of the poll
+      - name: answerId
+        in: path
+        type: integer
+        required: true
+        description: The id of the answer
+      responses:
+        204:
+          description: "Vote added"
         404:
           description: "Resource not found"
 definitions:

@@ -232,6 +232,46 @@ func init() {
           }
         }
       }
+    },
+    "/polls/{id}/votes/{answerId}": {
+      "post": {
+        "description": "Adds one vote to an answer of a poll",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "vote"
+        ],
+        "summary": "Votes in a option of a a poll",
+        "operationId": "addVotePoll",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "The id of the answer",
+            "name": "answerId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Vote added"
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -300,6 +340,10 @@ func init() {
     {
       "description": "Operations to get, create, update and delete polls",
       "name": "poll"
+    },
+    {
+      "description": "Operations to vote",
+      "name": "vote"
     }
   ]
 }`))
@@ -518,6 +562,46 @@ func init() {
           }
         }
       }
+    },
+    "/polls/{id}/votes/{answerId}": {
+      "post": {
+        "description": "Adds one vote to an answer of a poll",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "vote"
+        ],
+        "summary": "Votes in a option of a a poll",
+        "operationId": "addVotePoll",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "The id of the answer",
+            "name": "answerId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Vote added"
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -586,6 +670,10 @@ func init() {
     {
       "description": "Operations to get, create, update and delete polls",
       "name": "poll"
+    },
+    {
+      "description": "Operations to vote",
+      "name": "vote"
     }
   ]
 }`))

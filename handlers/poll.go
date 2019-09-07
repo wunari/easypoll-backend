@@ -10,17 +10,17 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// in-memory "database", it will be changed to proper database later on
-var polls = []*models.Poll{
+// Polls is an in-memory "database", it will be changed to proper database later on
+var Polls = []*models.Poll{
 	{ID: 1, Question: "What's your favorite color?", Answers: []*models.Answer{&models.Answer{Title: "Red"}, &models.Answer{Title: "Blue"}}, MultipleAnswers: false, CreatedAt: strfmt.DateTime(time.Now())},
 	{ID: 2, Question: "What's your favorite fruit?", Answers: []*models.Answer{&models.Answer{Title: "Apple"}, &models.Answer{Title: "Orange"}}, MultipleAnswers: true, CreatedAt: strfmt.DateTime(time.Now())},
 	{ID: 3, Question: "Do you like my car?", Answers: []*models.Answer{&models.Answer{Title: "Yes"}, &models.Answer{Title: "No"}}, MultipleAnswers: false, CreatedAt: strfmt.DateTime(time.Now())},
 }
-var pollCount = float64(len(polls))
+var pollCount = float64(len(Polls))
 
 // GetPollsHandlerFunc returns an array of polls
 func GetPollsHandlerFunc(params poll.GetPollsParams) middleware.Responder {
-	return poll.NewGetPollsOK().WithPayload(polls)
+	return poll.NewGetPollsOK().WithPayload(Polls)
 }
 
 // CreatePollHandlerFunc inserts a new poll in the database
@@ -33,13 +33,13 @@ func CreatePollHandlerFunc(params poll.CreatePollParams) middleware.Responder {
 		MultipleAnswers: params.Body.MultipleAnswers,
 		CreatedAt:       strfmt.DateTime(time.Now()),
 	}
-	polls = append(polls, newPoll)
+	Polls = append(Polls, newPoll)
 	return poll.NewCreatePollOK().WithPayload(newPoll)
 }
 
 // GetPollByIDHandlerFunc gets a single poll by id
 func GetPollByIDHandlerFunc(params poll.GetPollByIDParams) middleware.Responder {
-	for _, p := range polls {
+	for _, p := range Polls {
 		if p.ID == params.ID {
 			return poll.NewGetPollByIDOK().WithPayload(p)
 		}
@@ -49,16 +49,16 @@ func GetPollByIDHandlerFunc(params poll.GetPollByIDParams) middleware.Responder 
 
 // UpdatePollByIDHandlerFunc updates a poll by id
 func UpdatePollByIDHandlerFunc(params poll.UpdatePollByIDParams) middleware.Responder {
-	for i, p := range polls {
+	for i, p := range Polls {
 		if p.ID == params.ID {
-			polls[i] = &models.Poll{
+			Polls[i] = &models.Poll{
 				ID:              p.ID,
 				Question:        params.Body.Question,
 				Answers:         params.Body.Answers,
 				MultipleAnswers: params.Body.MultipleAnswers,
 				CreatedAt:       p.CreatedAt,
 			}
-			return poll.NewUpdatePollByIDOK().WithPayload(polls[i])
+			return poll.NewUpdatePollByIDOK().WithPayload(Polls[i])
 		}
 	}
 	return poll.NewUpdatePollByIDNotFound()
@@ -66,9 +66,9 @@ func UpdatePollByIDHandlerFunc(params poll.UpdatePollByIDParams) middleware.Resp
 
 // DeletePollByIDHandlerFunc deletes a poll by id
 func DeletePollByIDHandlerFunc(params poll.DeletePollByIDParams) middleware.Responder {
-	for i, p := range polls {
+	for i, p := range Polls {
 		if p.ID == params.ID {
-			polls = polls[:i+copy(polls[i:], polls[i+1:])]
+			Polls = Polls[:i+copy(Polls[i:], Polls[i+1:])]
 			return poll.NewDeletePollByIDNoContent()
 		}
 	}
