@@ -78,7 +78,7 @@ paths:
       parameters:
         - name: id
           in: path
-          type: number
+          type: integer
           required: true
           description: The id of the poll
       responses:
@@ -101,7 +101,7 @@ paths:
       parameters:
       - name: id
         in: path
-        type: number
+        type: integer
         required: true
         description: The id of the poll
       - in: "body"
@@ -139,7 +139,7 @@ paths:
       parameters:
         - name: id
           in: path
-          type: number
+          type: integer
           required: true
           description: The id of the poll
       responses:
@@ -161,7 +161,7 @@ paths:
       parameters:
       - name: id
         in: path
-        type: number
+        type: integer
         required: true
         description: The id of the poll
       - name: answerId
@@ -176,43 +176,43 @@ paths:
           description: "Resource not found"
 definitions:
   Poll:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "number"
+        type: integer
       question:
-        type: "string"
+        type: string
         example: "What's your favorite color?"
       answers:
-        type: "array"
+        type: array
         items:
           $ref: '#/definitions/Answer'
       votes:
-        type: "number"
+        type: integer
         x-omitempty: false
       multipleAnswers:
-        type: "boolean"
+        type: boolean
       createdAt:
-        type: "string"
-        format: "date-time"
+        type: string
+        format: date-time
   PollRequest:
-    type: "object"
+    type: object
     properties:
       question:
-        type: "string"
+        type: string
         example: "What's your favorite color?"
       answers:
-        type: "array"
+        type: array
         items:
           $ref: '#/definitions/Answer'
       multipleAnswers:
-        type: "boolean"
+        type: boolean
   Answer:
-    type: "object"
+    type: object
     properties:
       title:
-        type: "string"
+        type: string
         example: "Blue"
       votes:
-        type: "number"
+        type: integer
         x-omitempty: false

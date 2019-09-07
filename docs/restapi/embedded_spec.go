@@ -124,7 +124,7 @@ func init() {
         "operationId": "getPollById",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -158,7 +158,7 @@ func init() {
         "operationId": "updatePollById",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -216,7 +216,7 @@ func init() {
         "operationId": "deletePollById",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -249,7 +249,7 @@ func init() {
         "operationId": "addVotePoll",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -283,7 +283,7 @@ func init() {
           "example": "Blue"
         },
         "votes": {
-          "type": "number",
+          "type": "integer",
           "x-omitempty": false
         }
       }
@@ -302,7 +302,7 @@ func init() {
           "format": "date-time"
         },
         "id": {
-          "type": "number"
+          "type": "integer"
         },
         "multipleAnswers": {
           "type": "boolean"
@@ -312,7 +312,7 @@ func init() {
           "example": "What's your favorite color?"
         },
         "votes": {
-          "type": "number",
+          "type": "integer",
           "x-omitempty": false
         }
       }
@@ -454,7 +454,7 @@ func init() {
         "operationId": "getPollById",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -488,7 +488,7 @@ func init() {
         "operationId": "updatePollById",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -546,7 +546,7 @@ func init() {
         "operationId": "deletePollById",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -579,7 +579,7 @@ func init() {
         "operationId": "addVotePoll",
         "parameters": [
           {
-            "type": "number",
+            "type": "integer",
             "description": "The id of the poll",
             "name": "id",
             "in": "path",
@@ -613,7 +613,7 @@ func init() {
           "example": "Blue"
         },
         "votes": {
-          "type": "number",
+          "type": "integer",
           "x-omitempty": false
         }
       }
@@ -632,7 +632,7 @@ func init() {
           "format": "date-time"
         },
         "id": {
-          "type": "number"
+          "type": "integer"
         },
         "multipleAnswers": {
           "type": "boolean"
@@ -642,7 +642,7 @@ func init() {
           "example": "What's your favorite color?"
         },
         "votes": {
-          "type": "number",
+          "type": "integer",
           "x-omitempty": false
         }
       }

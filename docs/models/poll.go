@@ -27,7 +27,7 @@ type Poll struct {
 	CreatedAt strfmt.DateTime `json:"createdAt,omitempty"`
 
 	// id
-	ID float64 `json:"id,omitempty"`
+	ID int64 `json:"id,omitempty"`
 
 	// multiple answers
 	MultipleAnswers bool `json:"multipleAnswers,omitempty"`
@@ -36,7 +36,7 @@ type Poll struct {
 	Question string `json:"question,omitempty"`
 
 	// votes
-	Votes float64 `json:"votes"`
+	Votes int64 `json:"votes"`
 }
 
 // Validate validates this poll

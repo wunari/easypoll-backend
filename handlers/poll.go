@@ -16,7 +16,7 @@ var Polls = []*models.Poll{
 	{ID: 2, Question: "What's your favorite fruit?", Answers: []*models.Answer{&models.Answer{Title: "Apple"}, &models.Answer{Title: "Orange"}}, MultipleAnswers: true, CreatedAt: strfmt.DateTime(time.Now())},
 	{ID: 3, Question: "Do you like my car?", Answers: []*models.Answer{&models.Answer{Title: "Yes"}, &models.Answer{Title: "No"}}, MultipleAnswers: false, CreatedAt: strfmt.DateTime(time.Now())},
 }
-var pollCount = float64(len(Polls))
+var pollCount = int64(len(Polls))
 
 // GetPollsHandlerFunc returns an array of polls
 func GetPollsHandlerFunc(params poll.GetPollsParams) middleware.Responder {

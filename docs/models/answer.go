@@ -19,7 +19,7 @@ type Answer struct {
 	Title string `json:"title,omitempty"`
 
 	// votes
-	Votes float64 `json:"votes"`
+	Votes int64 `json:"votes"`
 }
 
 // Validate validates this answer
