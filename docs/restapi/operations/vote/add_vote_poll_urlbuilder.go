@@ -16,8 +16,7 @@ import (
 
 // AddVotePollURL generates an URL for the add vote poll operation
 type AddVotePollURL struct {
-	AnswerID int64
-	ID       int64
+	ID int64
 
 	_basePath string
 	// avoid unkeyed usage
@@ -43,14 +42,7 @@ func (o *AddVotePollURL) SetBasePath(bp string) {
 func (o *AddVotePollURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/polls/{id}/votes/{answerId}"
-
-	answerID := swag.FormatInt64(o.AnswerID)
-	if answerID != "" {
-		_path = strings.Replace(_path, "{answerId}", answerID, -1)
-	} else {
-		return nil, errors.New("answerId is required on AddVotePollURL")
-	}
+	var _path = "/polls/{id}/votes"
 
 	id := swag.FormatInt64(o.ID)
 	if id != "" {

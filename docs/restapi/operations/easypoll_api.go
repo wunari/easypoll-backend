@@ -289,7 +289,7 @@ func (o *EasypollAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/polls/{id}/votes/{answerId}"] = vote.NewAddVotePoll(o.context, o.VoteAddVotePollHandler)
+	o.handlers["POST"]["/polls/{id}/votes"] = vote.NewAddVotePoll(o.context, o.VoteAddVotePollHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

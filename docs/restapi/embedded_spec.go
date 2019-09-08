@@ -233,9 +233,9 @@ func init() {
         }
       }
     },
-    "/polls/{id}/votes/{answerId}": {
+    "/polls/{id}/votes": {
       "post": {
-        "description": "Adds one vote to an answer of a poll",
+        "description": "Adds one vote to answers of a poll, the request body is an array with integers, each number is the index of the answer.\n\nSending [1, 3, 2] will add one vote to the 2nd, 4th and 3rd answers of the poll.\n\nYou can only send more than one value in the array if the poll accepts multiple answers.\n\nRepeated numbers will be counted as one.\n",
         "consumes": [
           "application/json"
         ],
@@ -245,7 +245,7 @@ func init() {
         "tags": [
           "vote"
         ],
-        "summary": "Votes in a option of a a poll",
+        "summary": "Votes in answers of a poll",
         "operationId": "addVotePoll",
         "parameters": [
           {
@@ -256,19 +256,43 @@ func init() {
             "required": true
           },
           {
-            "type": "integer",
-            "description": "The id of the answer",
-            "name": "answerId",
-            "in": "path",
-            "required": true
+            "description": "Array with answers to be voted",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
           }
         ],
         "responses": {
           "204": {
-            "description": "Vote added"
+            "description": "Vote(s) added"
+          },
+          "400": {
+            "description": "Invalid input",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "body in body is required"
+                }
+              }
+            }
           },
           "404": {
             "description": "Resource not found"
+          },
+          "422": {
+            "description": "Missing required fields"
           }
         }
       }
@@ -563,9 +587,9 @@ func init() {
         }
       }
     },
-    "/polls/{id}/votes/{answerId}": {
+    "/polls/{id}/votes": {
       "post": {
-        "description": "Adds one vote to an answer of a poll",
+        "description": "Adds one vote to answers of a poll, the request body is an array with integers, each number is the index of the answer.\n\nSending [1, 3, 2] will add one vote to the 2nd, 4th and 3rd answers of the poll.\n\nYou can only send more than one value in the array if the poll accepts multiple answers.\n\nRepeated numbers will be counted as one.\n",
         "consumes": [
           "application/json"
         ],
@@ -575,7 +599,7 @@ func init() {
         "tags": [
           "vote"
         ],
-        "summary": "Votes in a option of a a poll",
+        "summary": "Votes in answers of a poll",
         "operationId": "addVotePoll",
         "parameters": [
           {
@@ -586,19 +610,43 @@ func init() {
             "required": true
           },
           {
-            "type": "integer",
-            "description": "The id of the answer",
-            "name": "answerId",
-            "in": "path",
-            "required": true
+            "description": "Array with answers to be voted",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
           }
         ],
         "responses": {
           "204": {
-            "description": "Vote added"
+            "description": "Vote(s) added"
+          },
+          "400": {
+            "description": "Invalid input",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "example": 400
+                },
+                "message": {
+                  "type": "string",
+                  "example": "body in body is required"
+                }
+              }
+            }
           },
           "404": {
             "description": "Resource not found"
+          },
+          "422": {
+            "description": "Missing required fields"
           }
         }
       }

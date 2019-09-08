@@ -147,12 +147,19 @@ paths:
           description: "Poll deleted"
         404:
           description: "Resource not found"
-  /polls/{id}/votes/{answerId}:
+  /polls/{id}/votes:
     post:
       tags:
       - "vote"
-      summary: "Votes in a option of a a poll"
-      description: "Adds one vote to an answer of a poll"
+      summary: "Votes in answers of a poll"
+      description: |
+        Adds one vote to answers of a poll, the request body is an array with integers, each number is the index of the answer.
+
+        Sending [1, 3, 2] will add one vote to the 2nd, 4th and 3rd answers of the poll.
+
+        You can only send more than one value in the array if the poll accepts multiple answers.
+
+        Repeated numbers will be counted as one.
       operationId: "addVotePoll"
       consumes:
       - "application/json"
@@ -164,16 +171,32 @@ paths:
         type: integer
         required: true
         description: The id of the poll
-      - name: answerId
-        in: path
-        type: integer
+      - in: "body"
+        name: "body"
+        description: "Array with answers to be voted"
         required: true
-        description: The id of the answer
+        schema:
+          type: array
+          items:
+            type: integer
       responses:
         204:
-          description: "Vote added"
+          description: "Vote(s) added"
+        400:
+          description: "Invalid input"
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: "body in body is required"
         404:
           description: "Resource not found"
+        422:
+          description: "Missing required fields"
 definitions:
   Poll:
     type: object

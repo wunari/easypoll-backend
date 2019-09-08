@@ -14,7 +14,7 @@ import (
 // AddVotePollNoContentCode is the HTTP code returned for type AddVotePollNoContent
 const AddVotePollNoContentCode int = 204
 
-/*AddVotePollNoContent Vote added
+/*AddVotePollNoContent Vote(s) added
 
 swagger:response addVotePollNoContent
 */
@@ -33,6 +33,50 @@ func (o *AddVotePollNoContent) WriteResponse(rw http.ResponseWriter, producer ru
 	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
 
 	rw.WriteHeader(204)
+}
+
+// AddVotePollBadRequestCode is the HTTP code returned for type AddVotePollBadRequest
+const AddVotePollBadRequestCode int = 400
+
+/*AddVotePollBadRequest Invalid input
+
+swagger:response addVotePollBadRequest
+*/
+type AddVotePollBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *AddVotePollBadRequestBody `json:"body,omitempty"`
+}
+
+// NewAddVotePollBadRequest creates AddVotePollBadRequest with default headers values
+func NewAddVotePollBadRequest() *AddVotePollBadRequest {
+
+	return &AddVotePollBadRequest{}
+}
+
+// WithPayload adds the payload to the add vote poll bad request response
+func (o *AddVotePollBadRequest) WithPayload(payload *AddVotePollBadRequestBody) *AddVotePollBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the add vote poll bad request response
+func (o *AddVotePollBadRequest) SetPayload(payload *AddVotePollBadRequestBody) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *AddVotePollBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // AddVotePollNotFoundCode is the HTTP code returned for type AddVotePollNotFound
@@ -57,4 +101,28 @@ func (o *AddVotePollNotFound) WriteResponse(rw http.ResponseWriter, producer run
 	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
 
 	rw.WriteHeader(404)
+}
+
+// AddVotePollUnprocessableEntityCode is the HTTP code returned for type AddVotePollUnprocessableEntity
+const AddVotePollUnprocessableEntityCode int = 422
+
+/*AddVotePollUnprocessableEntity Missing required fields
+
+swagger:response addVotePollUnprocessableEntity
+*/
+type AddVotePollUnprocessableEntity struct {
+}
+
+// NewAddVotePollUnprocessableEntity creates AddVotePollUnprocessableEntity with default headers values
+func NewAddVotePollUnprocessableEntity() *AddVotePollUnprocessableEntity {
+
+	return &AddVotePollUnprocessableEntity{}
+}
+
+// WriteResponse to the client
+func (o *AddVotePollUnprocessableEntity) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
+
+	rw.WriteHeader(422)
 }
