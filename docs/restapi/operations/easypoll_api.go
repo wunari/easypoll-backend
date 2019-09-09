@@ -55,6 +55,9 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		PollGetPollsHandler: poll.GetPollsHandlerFunc(func(params poll.GetPollsParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollGetPolls has not yet been implemented")
 		}),
+		PollPatchPollByIDHandler: poll.PatchPollByIDHandlerFunc(func(params poll.PatchPollByIDParams) middleware.Responder {
+			return middleware.NotImplemented("operation PollPatchPollByID has not yet been implemented")
+		}),
 		PollUpdatePollByIDHandler: poll.UpdatePollByIDHandlerFunc(func(params poll.UpdatePollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollUpdatePollByID has not yet been implemented")
 		}),
@@ -99,6 +102,8 @@ type EasypollAPI struct {
 	PollGetPollByIDHandler poll.GetPollByIDHandler
 	// PollGetPollsHandler sets the operation handler for the get polls operation
 	PollGetPollsHandler poll.GetPollsHandler
+	// PollPatchPollByIDHandler sets the operation handler for the patch poll by Id operation
+	PollPatchPollByIDHandler poll.PatchPollByIDHandler
 	// PollUpdatePollByIDHandler sets the operation handler for the update poll by Id operation
 	PollUpdatePollByIDHandler poll.UpdatePollByIDHandler
 
@@ -182,6 +187,10 @@ func (o *EasypollAPI) Validate() error {
 
 	if o.PollGetPollsHandler == nil {
 		unregistered = append(unregistered, "poll.GetPollsHandler")
+	}
+
+	if o.PollPatchPollByIDHandler == nil {
+		unregistered = append(unregistered, "poll.PatchPollByIDHandler")
 	}
 
 	if o.PollUpdatePollByIDHandler == nil {
@@ -310,6 +319,11 @@ func (o *EasypollAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/polls"] = poll.NewGetPolls(o.context, o.PollGetPollsHandler)
+
+	if o.handlers["PATCH"] == nil {
+		o.handlers["PATCH"] = make(map[string]http.Handler)
+	}
+	o.handlers["PATCH"]["/polls/{id}"] = poll.NewPatchPollByID(o.context, o.PollPatchPollByIDHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)

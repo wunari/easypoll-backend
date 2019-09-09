@@ -70,7 +70,7 @@ func init() {
         "tags": [
           "poll"
         ],
-        "summary": "Creates a new poll",
+        "summary": "Create a new poll",
         "operationId": "createPoll",
         "parameters": [
           {
@@ -226,6 +226,52 @@ func init() {
         "responses": {
           "204": {
             "description": "Poll deleted"
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates (part of) a poll properties, all fields are optional.\n\nUnspecified fields will be ignored and won't be updated.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Update (part of) a poll by id",
+        "operationId": "patchPollById",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Properties of the poll that will be updated",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PollRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Poll updated",
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
           },
           "404": {
             "description": "Resource not found"
@@ -424,7 +470,7 @@ func init() {
         "tags": [
           "poll"
         ],
-        "summary": "Creates a new poll",
+        "summary": "Create a new poll",
         "operationId": "createPoll",
         "parameters": [
           {
@@ -580,6 +626,52 @@ func init() {
         "responses": {
           "204": {
             "description": "Poll deleted"
+          },
+          "404": {
+            "description": "Resource not found"
+          }
+        }
+      },
+      "patch": {
+        "description": "Updates (part of) a poll properties, all fields are optional.\n\nUnspecified fields will be ignored and won't be updated.\n",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "poll"
+        ],
+        "summary": "Update (part of) a poll by id",
+        "operationId": "patchPollById",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "The id of the poll",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Properties of the poll that will be updated",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PollRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Poll updated",
+            "schema": {
+              "$ref": "#/definitions/Poll"
+            }
+          },
+          "400": {
+            "description": "Invalid input"
           },
           "404": {
             "description": "Resource not found"

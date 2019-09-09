@@ -36,7 +36,7 @@ func NewCreatePoll(ctx *middleware.Context, handler CreatePollHandler) *CreatePo
 
 /*CreatePoll swagger:route POST /polls poll createPoll
 
-Creates a new poll
+Create a new poll
 
 Inserts a new poll in the database
 

@@ -36,7 +36,7 @@ paths:
     post:
       tags:
       - "poll"
-      summary: "Creates a new poll"
+      summary: "Create a new poll"
       description: "Inserts a new poll in the database"
       operationId: "createPoll"
       consumes:
@@ -126,6 +126,40 @@ paths:
           description: "Resource not found"
         422:
           description: "Missing required fields"
+    patch:
+      tags:
+      - "poll"
+      summary: "Update (part of) a poll by id"
+      description: |
+        Updates (part of) a poll properties, all fields are optional.
+
+        Unspecified fields will be ignored and won't be updated.
+      operationId: "patchPollById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        type: integer
+        required: true
+        description: The id of the poll
+      - in: "body"
+        name: "body"
+        description: "Properties of the poll that will be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/PollRequest"
+      responses:
+        200:
+          schema:
+            $ref: "#/definitions/Poll"
+          description: "Poll updated"
+        400:
+          description: "Invalid input"
+        404:
+          description: "Resource not found"
     delete:
       tags:
       - "poll"
