@@ -17,16 +17,16 @@ import (
 )
 
 // GetAuthenticatedUserHandlerFunc turns a function with the right signature into a get authenticated user handler
-type GetAuthenticatedUserHandlerFunc func(GetAuthenticatedUserParams) middleware.Responder
+type GetAuthenticatedUserHandlerFunc func(GetAuthenticatedUserParams, interface{}) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn GetAuthenticatedUserHandlerFunc) Handle(params GetAuthenticatedUserParams) middleware.Responder {
-	return fn(params)
+func (fn GetAuthenticatedUserHandlerFunc) Handle(params GetAuthenticatedUserParams, principal interface{}) middleware.Responder {
+	return fn(params, principal)
 }
 
 // GetAuthenticatedUserHandler interface for that can handle valid get authenticated user params
 type GetAuthenticatedUserHandler interface {
-	Handle(GetAuthenticatedUserParams) middleware.Responder
+	Handle(GetAuthenticatedUserParams, interface{}) middleware.Responder
 }
 
 // NewGetAuthenticatedUser creates a new http.Handler for the get authenticated user operation
@@ -53,12 +53,25 @@ func (o *GetAuthenticatedUser) ServeHTTP(rw http.ResponseWriter, r *http.Request
 	}
 	var Params = NewGetAuthenticatedUserParams()
 
+	uprinc, aCtx, err := o.Context.Authorize(r, route)
+	if err != nil {
+		o.Context.Respond(rw, r, route.Produces, route, err)
+		return
+	}
+	if aCtx != nil {
+		r = aCtx
+	}
+	var principal interface{}
+	if uprinc != nil {
+		principal = uprinc
+	}
+
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
 		return
 	}
 
-	res := o.Handler.Handle(Params) // actually handle the request
+	res := o.Handler.Handle(Params, principal) // actually handle the request
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 

@@ -489,6 +489,11 @@ func init() {
     },
     "/user": {
       "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "description": "Get the authenticated user account details",
         "consumes": [
           "application/json"
@@ -609,6 +614,13 @@ func init() {
           "example": "secret"
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
     }
   },
   "tags": [
@@ -1098,6 +1110,11 @@ func init() {
     },
     "/user": {
       "get": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "description": "Get the authenticated user account details",
         "consumes": [
           "application/json"
@@ -1218,6 +1235,13 @@ func init() {
           "example": "secret"
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
     }
   },
   "tags": [

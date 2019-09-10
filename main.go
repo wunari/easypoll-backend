@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/wunari/easypoll-backend/auth"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
 
 	"github.com/wunari/easypoll-backend/docs/restapi"
@@ -52,6 +53,11 @@ func main() {
 	api.PollDeletePollByIDHandler = poll.DeletePollByIDHandlerFunc(handlers.DeletePollByIDHandlerFunc)
 
 	api.VoteAddVotePollHandler = vote.AddVotePollHandlerFunc(handlers.AddVotePollHandlerFunc)
+
+	// auth
+	api.BearerAuth = func(token string) (interface{}, error) {
+		return auth.IsValidToken(token)
+	}
 
 	// serve API
 	if err := server.Serve(); err != nil {

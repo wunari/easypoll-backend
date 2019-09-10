@@ -50,7 +50,7 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		PollDeletePollByIDHandler: poll.DeletePollByIDHandlerFunc(func(params poll.DeletePollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollDeletePollByID has not yet been implemented")
 		}),
-		AuthGetAuthenticatedUserHandler: auth.GetAuthenticatedUserHandlerFunc(func(params auth.GetAuthenticatedUserParams) middleware.Responder {
+		AuthGetAuthenticatedUserHandler: auth.GetAuthenticatedUserHandlerFunc(func(params auth.GetAuthenticatedUserParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation AuthGetAuthenticatedUser has not yet been implemented")
 		}),
 		PollGetPollByIDHandler: poll.GetPollByIDHandlerFunc(func(params poll.GetPollByIDParams) middleware.Responder {
@@ -71,6 +71,14 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		PollUpdatePollByIDHandler: poll.UpdatePollByIDHandlerFunc(func(params poll.UpdatePollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollUpdatePollByID has not yet been implemented")
 		}),
+
+		// Applies when the "Authorization" header is set
+		BearerAuth: func(token string) (interface{}, error) {
+			return nil, errors.NotImplemented("api key auth (Bearer) Authorization from header param [Authorization] has not yet been implemented")
+		},
+
+		// default authorizer is authorized meaning no requests are blocked
+		APIAuthorizer: security.Authorized(),
 	}
 }
 
@@ -101,6 +109,13 @@ type EasypollAPI struct {
 
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
+
+	// BearerAuth registers a function that takes a token and returns a principal
+	// it performs authentication based on an api key Authorization provided in the header
+	BearerAuth func(string) (interface{}, error)
+
+	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
+	APIAuthorizer runtime.Authorizer
 
 	// VoteAddVotePollHandler sets the operation handler for the add vote poll operation
 	VoteAddVotePollHandler vote.AddVotePollHandler
@@ -185,6 +200,10 @@ func (o *EasypollAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.BearerAuth == nil {
+		unregistered = append(unregistered, "AuthorizationAuth")
+	}
+
 	if o.VoteAddVotePollHandler == nil {
 		unregistered = append(unregistered, "vote.AddVotePollHandler")
 	}
@@ -240,14 +259,25 @@ func (o *EasypollAPI) ServeErrorFor(operationID string) func(http.ResponseWriter
 // AuthenticatorsFor gets the authenticators for the specified security schemes
 func (o *EasypollAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
 
-	return nil
+	result := make(map[string]runtime.Authenticator)
+	for name := range schemes {
+		switch name {
+
+		case "Bearer":
+
+			scheme := schemes[name]
+			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, o.BearerAuth)
+
+		}
+	}
+	return result
 
 }
 
 // Authorizer returns the registered authorizer
 func (o *EasypollAPI) Authorizer() runtime.Authorizer {
 
-	return nil
+	return o.APIAuthorizer
 
 }
 

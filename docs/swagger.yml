@@ -16,6 +16,11 @@ tags:
 schemes:
 - "https"
 - "http"
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /login:
     post:
@@ -114,6 +119,8 @@ paths:
       tags:
         - auth
       summary: Get the logged user info
+      security:
+        - Bearer: []
       description: Get the authenticated user account details
       operationId: "getAuthenticatedUser"
       consumes:
