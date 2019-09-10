@@ -40,6 +40,9 @@ Update a poll by id
 
 Updates the whole poll object with a new one
 
+Unspecified optional fields will be counted as zero-value and will be overwritten
+
+
 */
 type UpdatePollByID struct {
 	Context *middleware.Context

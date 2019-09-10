@@ -19,6 +19,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
 )
@@ -49,14 +50,23 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		PollDeletePollByIDHandler: poll.DeletePollByIDHandlerFunc(func(params poll.DeletePollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollDeletePollByID has not yet been implemented")
 		}),
+		AuthGetAuthenticatedUserHandler: auth.GetAuthenticatedUserHandlerFunc(func(params auth.GetAuthenticatedUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation AuthGetAuthenticatedUser has not yet been implemented")
+		}),
 		PollGetPollByIDHandler: poll.GetPollByIDHandlerFunc(func(params poll.GetPollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollGetPollByID has not yet been implemented")
 		}),
 		PollGetPollsHandler: poll.GetPollsHandlerFunc(func(params poll.GetPollsParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollGetPolls has not yet been implemented")
 		}),
+		AuthLoginUserHandler: auth.LoginUserHandlerFunc(func(params auth.LoginUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation AuthLoginUser has not yet been implemented")
+		}),
 		PollPatchPollByIDHandler: poll.PatchPollByIDHandlerFunc(func(params poll.PatchPollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollPatchPollByID has not yet been implemented")
+		}),
+		AuthRegisterUserHandler: auth.RegisterUserHandlerFunc(func(params auth.RegisterUserParams) middleware.Responder {
+			return middleware.NotImplemented("operation AuthRegisterUser has not yet been implemented")
 		}),
 		PollUpdatePollByIDHandler: poll.UpdatePollByIDHandlerFunc(func(params poll.UpdatePollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollUpdatePollByID has not yet been implemented")
@@ -98,12 +108,18 @@ type EasypollAPI struct {
 	PollCreatePollHandler poll.CreatePollHandler
 	// PollDeletePollByIDHandler sets the operation handler for the delete poll by Id operation
 	PollDeletePollByIDHandler poll.DeletePollByIDHandler
+	// AuthGetAuthenticatedUserHandler sets the operation handler for the get authenticated user operation
+	AuthGetAuthenticatedUserHandler auth.GetAuthenticatedUserHandler
 	// PollGetPollByIDHandler sets the operation handler for the get poll by Id operation
 	PollGetPollByIDHandler poll.GetPollByIDHandler
 	// PollGetPollsHandler sets the operation handler for the get polls operation
 	PollGetPollsHandler poll.GetPollsHandler
+	// AuthLoginUserHandler sets the operation handler for the login user operation
+	AuthLoginUserHandler auth.LoginUserHandler
 	// PollPatchPollByIDHandler sets the operation handler for the patch poll by Id operation
 	PollPatchPollByIDHandler poll.PatchPollByIDHandler
+	// AuthRegisterUserHandler sets the operation handler for the register user operation
+	AuthRegisterUserHandler auth.RegisterUserHandler
 	// PollUpdatePollByIDHandler sets the operation handler for the update poll by Id operation
 	PollUpdatePollByIDHandler poll.UpdatePollByIDHandler
 
@@ -181,6 +197,10 @@ func (o *EasypollAPI) Validate() error {
 		unregistered = append(unregistered, "poll.DeletePollByIDHandler")
 	}
 
+	if o.AuthGetAuthenticatedUserHandler == nil {
+		unregistered = append(unregistered, "auth.GetAuthenticatedUserHandler")
+	}
+
 	if o.PollGetPollByIDHandler == nil {
 		unregistered = append(unregistered, "poll.GetPollByIDHandler")
 	}
@@ -189,8 +209,16 @@ func (o *EasypollAPI) Validate() error {
 		unregistered = append(unregistered, "poll.GetPollsHandler")
 	}
 
+	if o.AuthLoginUserHandler == nil {
+		unregistered = append(unregistered, "auth.LoginUserHandler")
+	}
+
 	if o.PollPatchPollByIDHandler == nil {
 		unregistered = append(unregistered, "poll.PatchPollByIDHandler")
+	}
+
+	if o.AuthRegisterUserHandler == nil {
+		unregistered = append(unregistered, "auth.RegisterUserHandler")
 	}
 
 	if o.PollUpdatePollByIDHandler == nil {
@@ -313,6 +341,11 @@ func (o *EasypollAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/user"] = auth.NewGetAuthenticatedUser(o.context, o.AuthGetAuthenticatedUserHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/polls/{id}"] = poll.NewGetPollByID(o.context, o.PollGetPollByIDHandler)
 
 	if o.handlers["GET"] == nil {
@@ -320,10 +353,20 @@ func (o *EasypollAPI) initHandlerCache() {
 	}
 	o.handlers["GET"]["/polls"] = poll.NewGetPolls(o.context, o.PollGetPollsHandler)
 
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/login"] = auth.NewLoginUser(o.context, o.AuthLoginUserHandler)
+
 	if o.handlers["PATCH"] == nil {
 		o.handlers["PATCH"] = make(map[string]http.Handler)
 	}
 	o.handlers["PATCH"]["/polls/{id}"] = poll.NewPatchPollByID(o.context, o.PollPatchPollByIDHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/register"] = auth.NewRegisterUser(o.context, o.AuthRegisterUserHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)

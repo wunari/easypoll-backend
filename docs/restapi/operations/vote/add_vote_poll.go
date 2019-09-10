@@ -35,13 +35,13 @@ func NewAddVotePoll(ctx *middleware.Context, handler AddVotePollHandler) *AddVot
 
 Votes in answers of a poll
 
-Adds one vote to answers of a poll, the request body is an array with integers, each number is the index of the answer.
+Adds one vote to answers of a poll, the request body is an array with integers, each number is the index of the answer
 
-Sending [1, 3, 2] will add one vote to the 2nd, 4th and 3rd answers of the poll.
+Sending [1, 3, 2] will add one vote to the 2nd, 4th and 3rd answers of the poll
 
-You can only send more than one value in the array if the poll accepts multiple answers.
+You can only send more than one value in the array if the poll accepts multiple answers
 
-Repeated numbers will be counted as one.
+Repeated numbers will be counted as one
 
 
 */

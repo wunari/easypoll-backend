@@ -7,6 +7,8 @@ info:
     email: "noreply@easypoll.com.br"
 basePath: "/v1"
 tags:
+- name: "auth"
+  description: "Operations about authentication"
 - name: "poll"
   description: "Operations to get, create, update and delete polls"
 - name: "vote"
@@ -15,6 +17,117 @@ schemes:
 - "https"
 - "http"
 paths:
+  /login:
+    post:
+      tags:
+        - auth
+      summary: Login to the application
+      description: Authenticates an user and returns a token to be used in requests
+      operationId: "loginUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Account credentials"
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                description: Email of the account
+              password:
+                type: string
+                description: Password of the account
+                format: password
+            required:
+              - email
+              - password
+      responses:
+        200:
+          description: Login successful
+          schema:
+            allOf:
+              - $ref: '#/definitions/Token'
+              - type: object
+                properties:
+                  user:
+                    $ref: '#/definitions/User'
+        400:
+          description: Incorrect password or invalid input
+        404:
+          description: Email not registered
+        422:
+          description: Missing required fields
+  /register:
+    post:
+      tags:
+        - auth
+      summary: Create a new account
+      description: Create a new account and returns a token to be used in requests
+      operationId: "registerUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Account details"
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the user
+              email:
+                type: string
+                description: Email of the account
+              password:
+                type: string
+                description: Password of the account
+                format: password
+            required:
+              - name
+              - email
+              - password
+      responses:
+        200:
+          description: Account created
+          schema:
+            allOf:
+              - $ref: '#/definitions/Token'
+              - type: object
+                properties:
+                  user:
+                    $ref: '#/definitions/User'
+        400:
+          description: Email already registered or invalid input
+        422:
+          description: Missing required fields
+  /user:
+    get:
+      tags:
+        - auth
+      summary: Get the logged user info
+      description: Get the authenticated user account details
+      operationId: "getAuthenticatedUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: Return the account of the authenticated user
+          schema:
+            allOf:
+              - $ref: '#/definitions/User'
+        401:
+          description: Invalid token
   /polls:
     get:
       tags:
@@ -92,7 +205,10 @@ paths:
       tags:
       - "poll"
       summary: "Update a poll by id"
-      description: "Updates the whole poll object with a new one"
+      description: |
+        Updates the whole poll object with a new one
+
+        Unspecified optional fields will be counted as zero-value and will be overwritten
       operationId: "updatePollById"
       consumes:
       - "application/json"
@@ -131,9 +247,9 @@ paths:
       - "poll"
       summary: "Update (part of) a poll by id"
       description: |
-        Updates (part of) a poll properties, all fields are optional.
+        Updates (part of) a poll properties, all fields are optional
 
-        Unspecified fields will be ignored and won't be updated.
+        Unspecified fields will be ignored and won't be updated
       operationId: "patchPollById"
       consumes:
       - "application/json"
@@ -187,13 +303,13 @@ paths:
       - "vote"
       summary: "Votes in answers of a poll"
       description: |
-        Adds one vote to answers of a poll, the request body is an array with integers, each number is the index of the answer.
+        Adds one vote to answers of a poll, the request body is an array with integers, each number is the index of the answer
 
-        Sending [1, 3, 2] will add one vote to the 2nd, 4th and 3rd answers of the poll.
+        Sending [1, 3, 2] will add one vote to the 2nd, 4th and 3rd answers of the poll
 
-        You can only send more than one value in the array if the poll accepts multiple answers.
+        You can only send more than one value in the array if the poll accepts multiple answers
 
-        Repeated numbers will be counted as one.
+        Repeated numbers will be counted as one
       operationId: "addVotePoll"
       consumes:
       - "application/json"
@@ -273,3 +389,25 @@ definitions:
       votes:
         type: integer
         x-omitempty: false
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTUzMzY2MTY0Mn0.w_qI2tv8imANq_ys_ZKvLtrGItd7hrfRjifJoYSJzfo'
+  User:
+    type: object
+    properties:
+      name:
+        type: string
+        example: 'John Doe'
+        description: 'Name of the user'
+      email:
+        type: string
+        example: 'john@doe.com'
+        description: 'Email of the user'
+      password:
+        type: string
+        example: 'secret'
+        format: password
+        description: 'Password of the user'

@@ -33,9 +33,9 @@ func NewPatchPollByID(ctx *middleware.Context, handler PatchPollByIDHandler) *Pa
 
 Update (part of) a poll by id
 
-Updates (part of) a poll properties, all fields are optional.
+Updates (part of) a poll properties, all fields are optional
 
-Unspecified fields will be ignored and won't be updated.
+Unspecified fields will be ignored and won't be updated
 
 
 */
