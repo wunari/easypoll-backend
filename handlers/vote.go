@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/wunari/easypoll-backend/docs/models"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
 
 	"github.com/go-openapi/runtime/middleware"
@@ -13,11 +14,9 @@ func AddVotePollHandlerFunc(params vote.AddVotePollParams) middleware.Responder 
 	for i, poll := range Polls {
 		if poll.ID == params.ID {
 			if !poll.MultipleAnswers && len(params.Body) > 1 {
-				response := &vote.AddVotePollBadRequestBody{Code: 400, Message: "This poll doesn't accept multiple answers"}
-				return vote.NewAddVotePollBadRequest().WithPayload(response)
+				return vote.NewAddVotePollBadRequest().WithPayload(&models.Error{Code: 400, Message: "This poll doesn't accept multiple answers"})
 			} else if len(params.Body) < 1 {
-				response := &vote.AddVotePollBadRequestBody{Code: 400, Message: "You need to select at least one answer"}
-				return vote.NewAddVotePollBadRequest().WithPayload(response)
+				return vote.NewAddVotePollBadRequest().WithPayload(&models.Error{Code: 400, Message: "You need to select at least one answer"})
 			}
 
 			for j := range poll.Answers {

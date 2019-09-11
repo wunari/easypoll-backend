@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // LoginUserOKCode is the HTTP code returned for type LoginUserOK
@@ -63,6 +65,11 @@ const LoginUserBadRequestCode int = 400
 swagger:response loginUserBadRequest
 */
 type LoginUserBadRequest struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 // NewLoginUserBadRequest creates LoginUserBadRequest with default headers values
@@ -71,12 +78,27 @@ func NewLoginUserBadRequest() *LoginUserBadRequest {
 	return &LoginUserBadRequest{}
 }
 
+// WithPayload adds the payload to the login user bad request response
+func (o *LoginUserBadRequest) WithPayload(payload *models.Error) *LoginUserBadRequest {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the login user bad request response
+func (o *LoginUserBadRequest) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *LoginUserBadRequest) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(400)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // LoginUserNotFoundCode is the HTTP code returned for type LoginUserNotFound
@@ -87,6 +109,11 @@ const LoginUserNotFoundCode int = 404
 swagger:response loginUserNotFound
 */
 type LoginUserNotFound struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 // NewLoginUserNotFound creates LoginUserNotFound with default headers values
@@ -95,12 +122,27 @@ func NewLoginUserNotFound() *LoginUserNotFound {
 	return &LoginUserNotFound{}
 }
 
+// WithPayload adds the payload to the login user not found response
+func (o *LoginUserNotFound) WithPayload(payload *models.Error) *LoginUserNotFound {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the login user not found response
+func (o *LoginUserNotFound) SetPayload(payload *models.Error) {
+	o.Payload = payload
+}
+
 // WriteResponse to the client
 func (o *LoginUserNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
-	rw.Header().Del(runtime.HeaderContentType) //Remove Content-Type on empty responses
-
 	rw.WriteHeader(404)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
 }
 
 // LoginUserUnprocessableEntityCode is the HTTP code returned for type LoginUserUnprocessableEntity

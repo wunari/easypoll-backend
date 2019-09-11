@@ -9,8 +9,6 @@ import (
 	"net/http"
 
 	middleware "github.com/go-openapi/runtime/middleware"
-	strfmt "github.com/go-openapi/strfmt"
-	swag "github.com/go-openapi/swag"
 )
 
 // AddVotePollHandlerFunc turns a function with the right signature into a add vote poll handler
@@ -66,38 +64,4 @@ func (o *AddVotePoll) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
-}
-
-// AddVotePollBadRequestBody add vote poll bad request body
-// swagger:model AddVotePollBadRequestBody
-type AddVotePollBadRequestBody struct {
-
-	// code
-	Code int64 `json:"code,omitempty"`
-
-	// message
-	Message string `json:"message,omitempty"`
-}
-
-// Validate validates this add vote poll bad request body
-func (o *AddVotePollBadRequestBody) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// MarshalBinary interface implementation
-func (o *AddVotePollBadRequestBody) MarshalBinary() ([]byte, error) {
-	if o == nil {
-		return nil, nil
-	}
-	return swag.WriteJSON(o)
-}
-
-// UnmarshalBinary interface implementation
-func (o *AddVotePollBadRequestBody) UnmarshalBinary(b []byte) error {
-	var res AddVotePollBadRequestBody
-	if err := swag.ReadJSON(b, &res); err != nil {
-		return err
-	}
-	*o = res
-	return nil
 }

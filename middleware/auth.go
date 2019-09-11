@@ -16,7 +16,7 @@ var hmacSampleSecret = []byte("OiJiYXIiLCJuYmYiOjE0NDQ0Nzg0MDB9")
 func IsValidToken(token string) (*models.User, error) {
 	claims, err := parseAndCheckToken(token)
 	if err == nil {
-		return &models.User{Name: claims["foo"].(string)}, nil
+		return &models.User{Name: claims["name"].(string)}, nil
 	}
 	return nil, errors.New(401, "the provided token is not valid")
 }

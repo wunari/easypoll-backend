@@ -9,6 +9,8 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime"
+
+	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // AddVotePollNoContentCode is the HTTP code returned for type AddVotePollNoContent
@@ -47,7 +49,7 @@ type AddVotePollBadRequest struct {
 	/*
 	  In: Body
 	*/
-	Payload *AddVotePollBadRequestBody `json:"body,omitempty"`
+	Payload *models.Error `json:"body,omitempty"`
 }
 
 // NewAddVotePollBadRequest creates AddVotePollBadRequest with default headers values
@@ -57,13 +59,13 @@ func NewAddVotePollBadRequest() *AddVotePollBadRequest {
 }
 
 // WithPayload adds the payload to the add vote poll bad request response
-func (o *AddVotePollBadRequest) WithPayload(payload *AddVotePollBadRequestBody) *AddVotePollBadRequest {
+func (o *AddVotePollBadRequest) WithPayload(payload *models.Error) *AddVotePollBadRequest {
 	o.Payload = payload
 	return o
 }
 
 // SetPayload sets the payload to the add vote poll bad request response
-func (o *AddVotePollBadRequest) SetPayload(payload *AddVotePollBadRequestBody) {
+func (o *AddVotePollBadRequest) SetPayload(payload *models.Error) {
 	o.Payload = payload
 }
 

@@ -93,10 +93,16 @@ func init() {
             }
           },
           "400": {
-            "description": "Incorrect password or invalid input"
+            "description": "Incorrect password or invalid input",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "404": {
-            "description": "Email not registered"
+            "description": "Email not registered",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "422": {
             "description": "Missing required fields"
@@ -392,17 +398,7 @@ func init() {
           "400": {
             "description": "Invalid input",
             "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "body in body is required"
-                }
-              }
+              "$ref": "#/definitions/Error"
             }
           },
           "404": {
@@ -535,6 +531,19 @@ func init() {
         "votes": {
           "type": "integer",
           "x-omitempty": false
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "example": 622
+        },
+        "message": {
+          "type": "string",
+          "example": "error message"
         }
       }
     },
@@ -714,10 +723,16 @@ func init() {
             }
           },
           "400": {
-            "description": "Incorrect password or invalid input"
+            "description": "Incorrect password or invalid input",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "404": {
-            "description": "Email not registered"
+            "description": "Email not registered",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
           },
           "422": {
             "description": "Missing required fields"
@@ -1013,17 +1028,7 @@ func init() {
           "400": {
             "description": "Invalid input",
             "schema": {
-              "type": "object",
-              "properties": {
-                "code": {
-                  "type": "integer",
-                  "example": 400
-                },
-                "message": {
-                  "type": "string",
-                  "example": "body in body is required"
-                }
-              }
+              "$ref": "#/definitions/Error"
             }
           },
           "404": {
@@ -1156,6 +1161,19 @@ func init() {
         "votes": {
           "type": "integer",
           "x-omitempty": false
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "example": 622
+        },
+        "message": {
+          "type": "string",
+          "example": "error message"
         }
       }
     },

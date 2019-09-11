@@ -63,8 +63,12 @@ paths:
                     $ref: '#/definitions/User'
         400:
           description: Incorrect password or invalid input
+          schema:
+            $ref: '#/definitions/Error'
         404:
           description: Email not registered
+          schema:
+            $ref: '#/definitions/Error'
         422:
           description: Missing required fields
   /register:
@@ -342,14 +346,7 @@ paths:
         400:
           description: "Invalid input"
           schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                example: 400
-              message:
-                type: string
-                example: "body in body is required"
+            $ref: '#/definitions/Error'
         404:
           description: "Resource not found"
         422:
@@ -418,3 +415,12 @@ definitions:
         example: 'secret'
         format: password
         description: 'Password of the user'
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        example: 622
+      message:
+        type: string
+        example: "error message"

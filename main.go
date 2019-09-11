@@ -57,6 +57,8 @@ func main() {
 
 	api.VoteAddVotePollHandler = vote.AddVotePollHandlerFunc(handlers.AddVotePollHandlerFunc)
 
+	api.AuthLoginUserHandler = auth.LoginUserHandlerFunc(handlers.LoginUserHandlerFunc)
+	api.AuthRegisterUserHandler = auth.RegisterUserHandlerFunc(handlers.RegisterUserHandlerFunc)
 	api.AuthGetAuthenticatedUserHandler = auth.GetAuthenticatedUserHandlerFunc(handlers.GetAuthenticatedUserHandlerFunc)
 
 	// auth
