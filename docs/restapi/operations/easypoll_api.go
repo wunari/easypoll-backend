@@ -22,6 +22,8 @@ import (
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
+
+	models "github.com/wunari/easypoll-backend/docs/models"
 )
 
 // NewEasypollAPI creates a new Easypoll instance
@@ -50,7 +52,7 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		PollDeletePollByIDHandler: poll.DeletePollByIDHandlerFunc(func(params poll.DeletePollByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation PollDeletePollByID has not yet been implemented")
 		}),
-		AuthGetAuthenticatedUserHandler: auth.GetAuthenticatedUserHandlerFunc(func(params auth.GetAuthenticatedUserParams, principal interface{}) middleware.Responder {
+		AuthGetAuthenticatedUserHandler: auth.GetAuthenticatedUserHandlerFunc(func(params auth.GetAuthenticatedUserParams, principal *models.User) middleware.Responder {
 			return middleware.NotImplemented("operation AuthGetAuthenticatedUser has not yet been implemented")
 		}),
 		PollGetPollByIDHandler: poll.GetPollByIDHandlerFunc(func(params poll.GetPollByIDParams) middleware.Responder {
@@ -73,7 +75,7 @@ func NewEasypollAPI(spec *loads.Document) *EasypollAPI {
 		}),
 
 		// Applies when the "Authorization" header is set
-		BearerAuth: func(token string) (interface{}, error) {
+		BearerAuth: func(token string) (*models.User, error) {
 			return nil, errors.NotImplemented("api key auth (Bearer) Authorization from header param [Authorization] has not yet been implemented")
 		},
 
@@ -112,7 +114,7 @@ type EasypollAPI struct {
 
 	// BearerAuth registers a function that takes a token and returns a principal
 	// it performs authentication based on an api key Authorization provided in the header
-	BearerAuth func(string) (interface{}, error)
+	BearerAuth func(string) (*models.User, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
@@ -266,7 +268,9 @@ func (o *EasypollAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) 
 		case "Bearer":
 
 			scheme := schemes[name]
-			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, o.BearerAuth)
+			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, func(token string) (interface{}, error) {
+				return o.BearerAuth(token)
+			})
 
 		}
 	}

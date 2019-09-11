@@ -17,16 +17,16 @@ import (
 )
 
 // GetAuthenticatedUserHandlerFunc turns a function with the right signature into a get authenticated user handler
-type GetAuthenticatedUserHandlerFunc func(GetAuthenticatedUserParams, interface{}) middleware.Responder
+type GetAuthenticatedUserHandlerFunc func(GetAuthenticatedUserParams, *models.User) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn GetAuthenticatedUserHandlerFunc) Handle(params GetAuthenticatedUserParams, principal interface{}) middleware.Responder {
+func (fn GetAuthenticatedUserHandlerFunc) Handle(params GetAuthenticatedUserParams, principal *models.User) middleware.Responder {
 	return fn(params, principal)
 }
 
 // GetAuthenticatedUserHandler interface for that can handle valid get authenticated user params
 type GetAuthenticatedUserHandler interface {
-	Handle(GetAuthenticatedUserParams, interface{}) middleware.Responder
+	Handle(GetAuthenticatedUserParams, *models.User) middleware.Responder
 }
 
 // NewGetAuthenticatedUser creates a new http.Handler for the get authenticated user operation
@@ -61,9 +61,9 @@ func (o *GetAuthenticatedUser) ServeHTTP(rw http.ResponseWriter, r *http.Request
 	if aCtx != nil {
 		r = aCtx
 	}
-	var principal interface{}
+	var principal *models.User
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(*models.User) // this is really a models.User, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

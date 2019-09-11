@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/wunari/easypoll-backend/docs/models"
+
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
 	"github.com/wunari/easypoll-backend/middleware"
@@ -58,7 +60,7 @@ func main() {
 	api.AuthGetAuthenticatedUserHandler = auth.GetAuthenticatedUserHandlerFunc(handlers.GetAuthenticatedUserHandlerFunc)
 
 	// auth
-	api.BearerAuth = func(token string) (interface{}, error) {
+	api.BearerAuth = func(token string) (*models.User, error) {
 		return middleware.IsValidToken(token)
 	}
 
