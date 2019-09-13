@@ -24,7 +24,7 @@ func parseAndCheckToken(token string) (jwt.MapClaims, error) {
 		if _, ok := parsedToken.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", parsedToken.Header["alg"])
 		}
-		return os.Getenv("SECRET"), nil
+		return []byte(os.Getenv("SECRET")), nil
 	})
 
 	if err == nil {

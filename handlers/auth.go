@@ -24,7 +24,7 @@ func LoginUserHandlerFunc(params auth.LoginUserParams) middleware.Responder {
 					"email": user.Email,
 					"nbf":   time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
 				})
-				tokenString, _ := token.SignedString(os.Getenv("SECRET"))
+				tokenString, _ := token.SignedString([]byte(os.Getenv("SECRET")))
 
 				tokenModel := models.Token{Token: tokenString}
 				return auth.NewLoginUserOK().WithPayload(&auth.LoginUserOKBody{User: user, Token: tokenModel})
@@ -48,7 +48,7 @@ func RegisterUserHandlerFunc(params auth.RegisterUserParams) middleware.Responde
 		"email": params.Body.Email,
 		"nbf":   time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
 	})
-	tokenString, _ := token.SignedString(os.Getenv("SECRET"))
+	tokenString, _ := token.SignedString([]byte(os.Getenv("SECRET")))
 
 	tokenModel := models.Token{Token: tokenString}
 	return auth.NewRegisterUserOK().WithPayload(&auth.RegisterUserOKBody{User: &user, Token: tokenModel})
