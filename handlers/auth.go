@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -8,9 +9,6 @@ import (
 	"github.com/wunari/easypoll-backend/docs/models"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
 )
-
-// this should be changed to an env variable
-var hmacSampleSecret = []byte("OiJiYXIiLCJuYmYiOjE0NDQ0Nzg0MDB9")
 
 // in-memory "database", it will be changed to proper database later on
 var users = []*models.User{}
@@ -26,7 +24,7 @@ func LoginUserHandlerFunc(params auth.LoginUserParams) middleware.Responder {
 					"email": user.Email,
 					"nbf":   time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
 				})
-				tokenString, _ := token.SignedString(hmacSampleSecret)
+				tokenString, _ := token.SignedString(os.Getenv("SECRET"))
 
 				tokenModel := models.Token{Token: tokenString}
 				return auth.NewLoginUserOK().WithPayload(&auth.LoginUserOKBody{User: user, Token: tokenModel})
@@ -50,7 +48,7 @@ func RegisterUserHandlerFunc(params auth.RegisterUserParams) middleware.Responde
 		"email": params.Body.Email,
 		"nbf":   time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
 	})
-	tokenString, _ := token.SignedString(hmacSampleSecret)
+	tokenString, _ := token.SignedString(os.Getenv("SECRET"))
 
 	tokenModel := models.Token{Token: tokenString}
 	return auth.NewRegisterUserOK().WithPayload(&auth.RegisterUserOKBody{User: &user, Token: tokenModel})

@@ -2,15 +2,13 @@ package middleware
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/dgrijalva/jwt-go"
 	errors "github.com/go-openapi/errors"
 
 	"github.com/wunari/easypoll-backend/docs/models"
 )
-
-// this should be changed to an env variable
-var hmacSampleSecret = []byte("OiJiYXIiLCJuYmYiOjE0NDQ0Nzg0MDB9")
 
 // IsValidToken validates if the Bearer token sent by the user is valid
 func IsValidToken(token string) (*models.User, error) {
@@ -26,7 +24,7 @@ func parseAndCheckToken(token string) (jwt.MapClaims, error) {
 		if _, ok := parsedToken.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", parsedToken.Header["alg"])
 		}
-		return hmacSampleSecret, nil
+		return os.Getenv("SECRET"), nil
 	})
 
 	if err == nil {

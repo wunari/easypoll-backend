@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/joho/godotenv"
 	"github.com/wunari/easypoll-backend/docs/models"
 
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
@@ -21,6 +22,9 @@ import (
 )
 
 func main() {
+	// load env vars
+	godotenv.Load()
+
 	// load port
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 	if port == 0 {
