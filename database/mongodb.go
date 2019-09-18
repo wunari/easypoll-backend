@@ -23,6 +23,6 @@ func MongoConnect() {
 	MongoClient.Connect(ctx)
 	err = MongoClient.Ping(ctx, readpref.Primary())
 	if err != nil {
-		log.Fatal("could not connect to database")
+		log.Print("could not connect to database")
 	}
 }
