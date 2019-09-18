@@ -9,6 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/wunari/easypoll-backend/docs/models"
 
+	"github.com/wunari/easypoll-backend/database"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
 	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
 	"github.com/wunari/easypoll-backend/middleware"
@@ -31,6 +32,9 @@ func main() {
 		port = 3000
 	}
 	var portFlag = flag.Int("port", port, "Port to run this service on")
+
+	// connect to database
+	database.MongoConnect()
 
 	// load embedded swagger file
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
