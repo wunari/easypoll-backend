@@ -16,7 +16,12 @@ var MongoClient *mongo.Client
 
 // MongoConnect starts a connection with mongodb
 func MongoConnect() {
-	MongoClient, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("DATABASE")))
+	connectionString := os.Getenv("DATABASE")
+	if connectionString == "" {
+		log.Print("DATABASE env variable is missing")
+		return
+	}
+	MongoClient, err := mongo.NewClient(options.Client().ApplyURI(connectionString))
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
