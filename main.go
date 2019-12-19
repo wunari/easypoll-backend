@@ -74,6 +74,8 @@ func main() {
 		return middleware.IsValidToken(token)
 	}
 
+	server.ConfigureAPI()
+
 	// serve API
 	if err := server.Serve(); err != nil {
 		log.Fatalln(err)
