@@ -14,7 +14,6 @@ tags:
 - name: "vote"
   description: "Operations to vote"
 schemes:
-- "https"
 - "http"
 securityDefinitions:
   Bearer:

@@ -7,7 +7,6 @@ This is the oficial documentation for the EasyPoll API. If you have any problems
 
     Schemes:
       http
-      https
     Host: localhost
     BasePath: /v1
     Version: 1.0.0
