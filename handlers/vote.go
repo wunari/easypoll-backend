@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"github.com/wunari/easypoll-backend/docs/models"
-	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
+	"github.com/wunari/easypoll-backend/models"
+	"github.com/wunari/easypoll-backend/restapi/operations/vote"
 
 	"github.com/go-openapi/runtime/middleware"
 )

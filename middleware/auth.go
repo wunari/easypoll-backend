@@ -7,7 +7,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	errors "github.com/go-openapi/errors"
 
-	"github.com/wunari/easypoll-backend/docs/models"
+	"github.com/wunari/easypoll-backend/models"
 )
 
 // IsValidToken validates if the Bearer token sent by the user is valid

@@ -16,7 +16,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	models "github.com/wunari/easypoll-backend/docs/models"
+	models "github.com/wunari/easypoll-backend/models"
 )
 
 // NewPatchPollByIDParams creates a new PatchPollByIDParams object

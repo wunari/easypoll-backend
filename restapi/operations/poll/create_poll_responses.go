@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	models "github.com/wunari/easypoll-backend/docs/models"
+	models "github.com/wunari/easypoll-backend/models"
 )
 
 // CreatePollOKCode is the HTTP code returned for type CreatePollOK

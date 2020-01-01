@@ -25,7 +25,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 	"golang.org/x/net/netutil"
 
-	"github.com/wunari/easypoll-backend/docs/restapi/operations"
+	"github.com/wunari/easypoll-backend/restapi/operations"
 )
 
 const (

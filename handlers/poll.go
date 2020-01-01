@@ -3,8 +3,8 @@ package handlers
 import (
 	"time"
 
-	"github.com/wunari/easypoll-backend/docs/models"
-	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/models"
+	"github.com/wunari/easypoll-backend/restapi/operations/poll"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"

@@ -6,8 +6,8 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/wunari/easypoll-backend/docs/models"
-	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
+	"github.com/wunari/easypoll-backend/models"
+	"github.com/wunari/easypoll-backend/restapi/operations/auth"
 )
 
 // in-memory "database", it will be changed to proper database later on

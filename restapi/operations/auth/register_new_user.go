@@ -14,45 +14,45 @@ import (
 	swag "github.com/go-openapi/swag"
 	validate "github.com/go-openapi/validate"
 
-	models "github.com/wunari/easypoll-backend/docs/models"
+	models "github.com/wunari/easypoll-backend/models"
 )
 
-// PostRegisterHandlerFunc turns a function with the right signature into a post register handler
-type PostRegisterHandlerFunc func(PostRegisterParams) middleware.Responder
+// RegisterNewUserHandlerFunc turns a function with the right signature into a register new user handler
+type RegisterNewUserHandlerFunc func(RegisterNewUserParams) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn PostRegisterHandlerFunc) Handle(params PostRegisterParams) middleware.Responder {
+func (fn RegisterNewUserHandlerFunc) Handle(params RegisterNewUserParams) middleware.Responder {
 	return fn(params)
 }
 
-// PostRegisterHandler interface for that can handle valid post register params
-type PostRegisterHandler interface {
-	Handle(PostRegisterParams) middleware.Responder
+// RegisterNewUserHandler interface for that can handle valid register new user params
+type RegisterNewUserHandler interface {
+	Handle(RegisterNewUserParams) middleware.Responder
 }
 
-// NewPostRegister creates a new http.Handler for the post register operation
-func NewPostRegister(ctx *middleware.Context, handler PostRegisterHandler) *PostRegister {
-	return &PostRegister{Context: ctx, Handler: handler}
+// NewRegisterNewUser creates a new http.Handler for the register new user operation
+func NewRegisterNewUser(ctx *middleware.Context, handler RegisterNewUserHandler) *RegisterNewUser {
+	return &RegisterNewUser{Context: ctx, Handler: handler}
 }
 
-/*PostRegister swagger:route POST /register auth postRegister
+/*RegisterNewUser swagger:route POST /register auth registerNewUser
 
 Create a new account
 
 Create a new account and returns a token to be used in requests
 
 */
-type PostRegister struct {
+type RegisterNewUser struct {
 	Context *middleware.Context
-	Handler PostRegisterHandler
+	Handler RegisterNewUserHandler
 }
 
-func (o *PostRegister) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *RegisterNewUser) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		r = rCtx
 	}
-	var Params = NewPostRegisterParams()
+	var Params = NewRegisterNewUserParams()
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
 		o.Context.Respond(rw, r, route.Produces, route, err)
@@ -65,9 +65,9 @@ func (o *PostRegister) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 }
 
-// PostRegisterBody post register body
-// swagger:model PostRegisterBody
-type PostRegisterBody struct {
+// RegisterNewUserBody register new user body
+// swagger:model RegisterNewUserBody
+type RegisterNewUserBody struct {
 
 	// Email of the account
 	// Required: true
@@ -83,8 +83,8 @@ type PostRegisterBody struct {
 	Password *strfmt.Password `json:"password"`
 }
 
-// Validate validates this post register body
-func (o *PostRegisterBody) Validate(formats strfmt.Registry) error {
+// Validate validates this register new user body
+func (o *RegisterNewUserBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := o.validateEmail(formats); err != nil {
@@ -105,7 +105,7 @@ func (o *PostRegisterBody) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (o *PostRegisterBody) validateEmail(formats strfmt.Registry) error {
+func (o *RegisterNewUserBody) validateEmail(formats strfmt.Registry) error {
 
 	if err := validate.Required("body"+"."+"email", "body", o.Email); err != nil {
 		return err
@@ -114,7 +114,7 @@ func (o *PostRegisterBody) validateEmail(formats strfmt.Registry) error {
 	return nil
 }
 
-func (o *PostRegisterBody) validateName(formats strfmt.Registry) error {
+func (o *RegisterNewUserBody) validateName(formats strfmt.Registry) error {
 
 	if err := validate.Required("body"+"."+"name", "body", o.Name); err != nil {
 		return err
@@ -123,7 +123,7 @@ func (o *PostRegisterBody) validateName(formats strfmt.Registry) error {
 	return nil
 }
 
-func (o *PostRegisterBody) validatePassword(formats strfmt.Registry) error {
+func (o *RegisterNewUserBody) validatePassword(formats strfmt.Registry) error {
 
 	if err := validate.Required("body"+"."+"password", "body", o.Password); err != nil {
 		return err
@@ -137,7 +137,7 @@ func (o *PostRegisterBody) validatePassword(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (o *PostRegisterBody) MarshalBinary() ([]byte, error) {
+func (o *RegisterNewUserBody) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -145,8 +145,8 @@ func (o *PostRegisterBody) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (o *PostRegisterBody) UnmarshalBinary(b []byte) error {
-	var res PostRegisterBody
+func (o *RegisterNewUserBody) UnmarshalBinary(b []byte) error {
+	var res RegisterNewUserBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
@@ -154,9 +154,9 @@ func (o *PostRegisterBody) UnmarshalBinary(b []byte) error {
 	return nil
 }
 
-// PostRegisterOKBody post register o k body
-// swagger:model PostRegisterOKBody
-type PostRegisterOKBody struct {
+// RegisterNewUserOKBody register new user o k body
+// swagger:model RegisterNewUserOKBody
+type RegisterNewUserOKBody struct {
 	models.Token
 
 	// user
@@ -164,54 +164,54 @@ type PostRegisterOKBody struct {
 }
 
 // UnmarshalJSON unmarshals this object from a JSON structure
-func (o *PostRegisterOKBody) UnmarshalJSON(raw []byte) error {
-	// PostRegisterOKBodyAO0
-	var postRegisterOKBodyAO0 models.Token
-	if err := swag.ReadJSON(raw, &postRegisterOKBodyAO0); err != nil {
+func (o *RegisterNewUserOKBody) UnmarshalJSON(raw []byte) error {
+	// RegisterNewUserOKBodyAO0
+	var registerNewUserOKBodyAO0 models.Token
+	if err := swag.ReadJSON(raw, &registerNewUserOKBodyAO0); err != nil {
 		return err
 	}
-	o.Token = postRegisterOKBodyAO0
+	o.Token = registerNewUserOKBodyAO0
 
-	// PostRegisterOKBodyAO1
-	var dataPostRegisterOKBodyAO1 struct {
+	// RegisterNewUserOKBodyAO1
+	var dataRegisterNewUserOKBodyAO1 struct {
 		User *models.User `json:"user,omitempty"`
 	}
-	if err := swag.ReadJSON(raw, &dataPostRegisterOKBodyAO1); err != nil {
+	if err := swag.ReadJSON(raw, &dataRegisterNewUserOKBodyAO1); err != nil {
 		return err
 	}
 
-	o.User = dataPostRegisterOKBodyAO1.User
+	o.User = dataRegisterNewUserOKBodyAO1.User
 
 	return nil
 }
 
 // MarshalJSON marshals this object to a JSON structure
-func (o PostRegisterOKBody) MarshalJSON() ([]byte, error) {
+func (o RegisterNewUserOKBody) MarshalJSON() ([]byte, error) {
 	_parts := make([][]byte, 0, 2)
 
-	postRegisterOKBodyAO0, err := swag.WriteJSON(o.Token)
+	registerNewUserOKBodyAO0, err := swag.WriteJSON(o.Token)
 	if err != nil {
 		return nil, err
 	}
-	_parts = append(_parts, postRegisterOKBodyAO0)
+	_parts = append(_parts, registerNewUserOKBodyAO0)
 
-	var dataPostRegisterOKBodyAO1 struct {
+	var dataRegisterNewUserOKBodyAO1 struct {
 		User *models.User `json:"user,omitempty"`
 	}
 
-	dataPostRegisterOKBodyAO1.User = o.User
+	dataRegisterNewUserOKBodyAO1.User = o.User
 
-	jsonDataPostRegisterOKBodyAO1, errPostRegisterOKBodyAO1 := swag.WriteJSON(dataPostRegisterOKBodyAO1)
-	if errPostRegisterOKBodyAO1 != nil {
-		return nil, errPostRegisterOKBodyAO1
+	jsonDataRegisterNewUserOKBodyAO1, errRegisterNewUserOKBodyAO1 := swag.WriteJSON(dataRegisterNewUserOKBodyAO1)
+	if errRegisterNewUserOKBodyAO1 != nil {
+		return nil, errRegisterNewUserOKBodyAO1
 	}
-	_parts = append(_parts, jsonDataPostRegisterOKBodyAO1)
+	_parts = append(_parts, jsonDataRegisterNewUserOKBodyAO1)
 
 	return swag.ConcatJSON(_parts...), nil
 }
 
-// Validate validates this post register o k body
-func (o *PostRegisterOKBody) Validate(formats strfmt.Registry) error {
+// Validate validates this register new user o k body
+func (o *RegisterNewUserOKBody) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	// validation for a type composition with models.Token
@@ -229,7 +229,7 @@ func (o *PostRegisterOKBody) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (o *PostRegisterOKBody) validateUser(formats strfmt.Registry) error {
+func (o *RegisterNewUserOKBody) validateUser(formats strfmt.Registry) error {
 
 	if swag.IsZero(o.User) { // not required
 		return nil
@@ -238,7 +238,7 @@ func (o *PostRegisterOKBody) validateUser(formats strfmt.Registry) error {
 	if o.User != nil {
 		if err := o.User.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("postRegisterOK" + "." + "user")
+				return ve.ValidateName("registerNewUserOK" + "." + "user")
 			}
 			return err
 		}
@@ -248,7 +248,7 @@ func (o *PostRegisterOKBody) validateUser(formats strfmt.Registry) error {
 }
 
 // MarshalBinary interface implementation
-func (o *PostRegisterOKBody) MarshalBinary() ([]byte, error) {
+func (o *RegisterNewUserOKBody) MarshalBinary() ([]byte, error) {
 	if o == nil {
 		return nil, nil
 	}
@@ -256,8 +256,8 @@ func (o *PostRegisterOKBody) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (o *PostRegisterOKBody) UnmarshalBinary(b []byte) error {
-	var res PostRegisterOKBody
+func (o *RegisterNewUserOKBody) UnmarshalBinary(b []byte) error {
+	var res RegisterNewUserOKBody
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

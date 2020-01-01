@@ -14,7 +14,7 @@ import (
 	swag "github.com/go-openapi/swag"
 	validate "github.com/go-openapi/validate"
 
-	models "github.com/wunari/easypoll-backend/docs/models"
+	models "github.com/wunari/easypoll-backend/models"
 )
 
 // RegisterUserHandlerFunc turns a function with the right signature into a register user handler

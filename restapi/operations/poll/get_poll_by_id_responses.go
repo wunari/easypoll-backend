@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	models "github.com/wunari/easypoll-backend/docs/models"
+	models "github.com/wunari/easypoll-backend/models"
 )
 
 // GetPollByIDOKCode is the HTTP code returned for type GetPollByIDOK

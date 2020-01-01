@@ -19,11 +19,11 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/wunari/easypoll-backend/docs/restapi/operations/auth"
-	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
-	"github.com/wunari/easypoll-backend/docs/restapi/operations/vote"
+	"github.com/wunari/easypoll-backend/restapi/operations/auth"
+	"github.com/wunari/easypoll-backend/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/restapi/operations/vote"
 
-	models "github.com/wunari/easypoll-backend/docs/models"
+	models "github.com/wunari/easypoll-backend/models"
 )
 
 // NewEasypollAPI creates a new Easypoll instance

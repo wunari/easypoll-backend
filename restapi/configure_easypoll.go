@@ -8,20 +8,32 @@ import (
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 
-	"github.com/wunari/easypoll-backend/docs/restapi/operations"
-	"github.com/wunari/easypoll-backend/docs/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/database"
+	"github.com/wunari/easypoll-backend/handlers"
+	"github.com/wunari/easypoll-backend/middleware"
+	"github.com/wunari/easypoll-backend/models"
+	"github.com/wunari/easypoll-backend/restapi/operations"
+	"github.com/wunari/easypoll-backend/restapi/operations/auth"
+	"github.com/wunari/easypoll-backend/restapi/operations/poll"
+	"github.com/wunari/easypoll-backend/restapi/operations/vote"
 )
 
-//go:generate swagger generate server --target ../../docs --name Easypoll --spec ../swagger.yml --exclude-main
+//go:generate swagger generate server --target ../../easypoll-backend --name Easypoll --spec ../swagger.yml --principal models.User
 
 func configureFlags(api *operations.EasypollAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
 
 func configureAPI(api *operations.EasypollAPI) http.Handler {
+	// load env vars
+	godotenv.Load()
+
+	// connect to database
+	database.MongoConnect()
+
 	// configure the api here
 	api.ServeError = errors.ServeError
 
@@ -35,16 +47,23 @@ func configureAPI(api *operations.EasypollAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.PollCreatePollHandler == nil {
-		api.PollCreatePollHandler = poll.CreatePollHandlerFunc(func(params poll.CreatePollParams) middleware.Responder {
-			return middleware.NotImplemented("operation poll.CreatePoll has not yet been implemented")
-		})
+	// Applies when the "Authorization" header is set
+	api.BearerAuth = func(token string) (*models.User, error) {
+		return middleware.IsValidToken(token)
 	}
-	if api.PollGetPollsHandler == nil {
-		api.PollGetPollsHandler = poll.GetPollsHandlerFunc(func(params poll.GetPollsParams) middleware.Responder {
-			return middleware.NotImplemented("operation poll.GetPolls has not yet been implemented")
-		})
-	}
+
+	// handlers
+	api.PollGetPollsHandler = poll.GetPollsHandlerFunc(handlers.GetPollsHandlerFunc)
+	api.PollCreatePollHandler = poll.CreatePollHandlerFunc(handlers.CreatePollHandlerFunc)
+	api.PollGetPollByIDHandler = poll.GetPollByIDHandlerFunc(handlers.GetPollByIDHandlerFunc)
+	api.PollUpdatePollByIDHandler = poll.UpdatePollByIDHandlerFunc(handlers.UpdatePollByIDHandlerFunc)
+	api.PollDeletePollByIDHandler = poll.DeletePollByIDHandlerFunc(handlers.DeletePollByIDHandlerFunc)
+
+	api.VoteAddVotePollHandler = vote.AddVotePollHandlerFunc(handlers.AddVotePollHandlerFunc)
+
+	api.AuthLoginUserHandler = auth.LoginUserHandlerFunc(handlers.LoginUserHandlerFunc)
+	api.AuthRegisterUserHandler = auth.RegisterUserHandlerFunc(handlers.RegisterUserHandlerFunc)
+	api.AuthGetAuthenticatedUserHandler = auth.GetAuthenticatedUserHandlerFunc(handlers.GetAuthenticatedUserHandlerFunc)
 
 	api.ServerShutdown = func() {}
 

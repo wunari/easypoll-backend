@@ -26,7 +26,7 @@ Start the server and go to http://localhost:3000/v1/docs
 You should always update `swagger.yml` first, then regenerate docs with
 
 ```bash
-swagger generate server -t docs -f ./docs/swagger.yml --exclude-main -A easypoll --principal models.User
+go generate ./restapi
 ```
 
 ## Live version

@@ -13,7 +13,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	swag "github.com/go-openapi/swag"
 
-	models "github.com/wunari/easypoll-backend/docs/models"
+	models "github.com/wunari/easypoll-backend/models"
 )
 
 // UpdatePollByIDHandlerFunc turns a function with the right signature into a update poll by Id handler
