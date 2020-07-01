@@ -26,10 +26,6 @@ You should always update `swagger.yml` first, then regenerate docs with
 go generate ./restapi
 ```
 
-## Live version
-
-https://wunari-easypoll.herokuapp.com/v1/docs
-
 ## Built With
 
 * [go-swagger](https://goswagger.io/) - Swagger 2.0 implementation for go
